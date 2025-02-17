@@ -5,14 +5,28 @@ import PageSection from '../../components/PageSection'
 import Head from '../../components/Head'
 import AcuityBookingButton from '../../components/AcuityBookingButton'
 
-// Placeholder gallery images
+// Import gallery images
+import leahDigitals1 from '../../assets/images/digitals/Leah Digitals0292 1.jpg'
+import leahDigitals2 from '../../assets/images/digitals/Leah Digitals0277 1.jpg'
+import leahDigitals3 from '../../assets/images/digitals/Leah Digitals0216 1.jpg'
+import leahDigitals4 from '../../assets/images/digitals/Leah Digitals0061 1.jpg'
+import img3450 from '../../assets/images/digitals/IMG_3450.jpg'
+import img3415 from '../../assets/images/digitals/IMG_3415.jpg'
+import img3405 from '../../assets/images/digitals/IMG_3405-Edit.jpg'
+import img3378 from '../../assets/images/digitals/IMG_3378-Edit.jpg'
+import img3356 from '../../assets/images/digitals/IMG_3356.jpg'
+
+// Gallery images array
 const GALLERY_IMAGES = [
-  'https://picsum.photos/seed/modeling1/800/1200',
-  'https://picsum.photos/seed/modeling2/800/1200',
-  'https://picsum.photos/seed/modeling3/800/1200',
-  'https://picsum.photos/seed/modeling4/800/1200',
-  'https://picsum.photos/seed/modeling5/800/1200',
-  'https://picsum.photos/seed/modeling6/800/1200',
+  leahDigitals1,
+  leahDigitals2,
+  leahDigitals3,
+  leahDigitals4,
+  img3450,
+  img3415,
+  img3405,
+  img3378,
+  img3356,
 ]
 
 export const Route = createFileRoute('/modeling/')({
