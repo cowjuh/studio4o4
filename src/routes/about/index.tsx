@@ -19,7 +19,7 @@ export const Route = createFileRoute('/about/')({
         image={GALLERY_IMAGES[0]}
         path="/about"
       />
-      <div className="p-8">
+      <div className="lg:px-8 px-2 py-8">
         <h1 className="text-2xl font-medium mb-8">About</h1>
         
         <ImageGallery images={GALLERY_IMAGES} />

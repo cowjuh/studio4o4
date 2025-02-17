@@ -72,7 +72,7 @@ const Sidebar = ({ orientation = 'vertical' }: SidebarProps) => {
   return (
     <nav 
       className={`
-        relative p-4 
+        relative py-4 px-2 
         ${orientation === 'horizontal' 
           ? 'flex flex-row gap-6 min-w-max py-3' 
           : 'flex flex-col gap-2'

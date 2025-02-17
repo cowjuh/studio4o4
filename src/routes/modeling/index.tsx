@@ -3,7 +3,9 @@ import ImageGallery from '../../components/ImageGallery'
 import PackageCard from '../../components/PackageCard'
 import PageSection from '../../components/PageSection'
 import Head from '../../components/Head'
-import AcuityBookingButton from '../../components/AcuityBookingButton'
+import BookingSection from '../../components/BookingSection'
+import LocationSection from '../../components/LocationSection'
+import CancellationSection from '../../components/CancellationSection'
 
 // Import gallery images
 import leahDigitals1 from '../../assets/images/digitals/Leah Digitals0292 1.jpg'
@@ -38,7 +40,7 @@ export const Route = createFileRoute('/modeling/')({
         image={GALLERY_IMAGES[0]}
         path="/modeling"
       />
-      <div className="p-8">
+      <div className="lg:px-8 px-2 py-8">
         <h1 className="text-2xl font-medium mb-8">Modeling Digitals</h1>
         
         <ImageGallery images={GALLERY_IMAGES} />
@@ -83,39 +85,9 @@ export const Route = createFileRoute('/modeling/')({
           </div>
         </PageSection>
 
-        <PageSection title="Booking">
-          <div className="space-y-4">
-            <AcuityBookingButton className="w-full md:w-auto" />
-            <div className="space-y-2">
-              <p className="text-sm">
-                To book, DM @cowjuh on IG or email bookings@4o4.space
-              </p>
-              <p className="text-sm">
-                Payment via Venmo, Zelle, or Cash
-              </p>
-            </div>
-          </div>
-        </PageSection>
-
-        <PageSection title="Location">
-          <p className="text-sm">
-            The studio is conveniently located in Bushwick, within a 3 minute
-            walk of the Morgan Ave L stop. Exact address provided upon booking.
-          </p>
-        </PageSection>
-
-        <PageSection title="Cancellation, Rescheduling Policy">
-          <div className="space-y-4">
-            <div>
-              <h3 className="font-medium mb-2">Cancellation Policy</h3>
-              <p className="text-sm">A 50% deposit is required to book your shoot.</p>
-            </div>
-            <ul className="text-sm space-y-2">
-              <li>Cancellations more than 48 hours before — You'll get your full deposit back</li>
-              <li>Cancellations within 48 hours — Deposit is non-refundable</li>
-            </ul>
-          </div>
-        </PageSection>
+        <BookingSection />
+        <LocationSection />
+        <CancellationSection />
       </div>
     </>
   ),

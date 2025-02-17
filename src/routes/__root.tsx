@@ -15,7 +15,7 @@ const RootComponent = () => {
               <Sidebar orientation="vertical" />
             </div>
 
-            <main className="flex-1 p-4 md:pl-8">
+            <main className="flex-1 lg:p-2">
               <Outlet />
             </main>
           </div>
