@@ -3,8 +3,8 @@ import { Link } from '@tanstack/react-router'
 const Navbar = () => {
   return (
     <nav className="sticky top-0 bg-white border-b border-black/70 z-50">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
+      <div className="max-w-7xl mx-auto px-4 h-16 flex items-center">
+        <div className="flex justify-between items-center w-full">
           <div className="flex items-center space-x-4">
             <div className="h-10 w-10 overflow-hidden">
               <img 
@@ -14,8 +14,8 @@ const Navbar = () => {
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-medium">4o4.space STUDIO</span>
-              <span className="text-sm">by Jenny Zhang</span>
+              <span className="font-medium">STUDIO 4o4</span>
+              <span className="text-sm">4o4.space</span>
             </div>
             <div className="ml-6 text-sm">
               <div>Bushwick</div>
