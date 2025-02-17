@@ -17,8 +17,7 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mouseRef = useRef(new THREE.Vector2())
   const [coordinates, setCoordinates] = useState<Coordinates>(null);
-  const [selectedMeshIndex, setSelectedMeshIndex] = useState<number>(0);
-  const currentSelectionRef = useRef<number>(0);
+  const selectedMeshIndexRef = useRef<number>(0);
   const borderRef = useRef<THREE.LineSegments | null>(null);
   const timeRef = useRef<number>(0);
   const dragRef = useRef({ 
@@ -37,6 +36,16 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
     sphereGroup: THREE.Group
     raycaster: THREE.Raycaster
   }>()
+
+  // Separate effect for image selection
+  useEffect(() => {
+    const updateSelectedImage = () => {
+      selectedMeshIndexRef.current = (selectedMeshIndexRef.current + 1) % images.length;
+    };
+
+    const intervalId = setInterval(updateSelectedImage, 1000);
+    return () => clearInterval(intervalId);
+  }, [images.length]);
 
   useEffect(() => {
     if (!canvasRef.current || !containerRef.current) return
@@ -126,22 +135,6 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
       imageMeshes.push(mesh)
     })
 
-    // Set initial random selection and start interval
-    const updateSelectedImage = () => {
-      const next = Math.floor(Math.random() * images.length);
-      setSelectedMeshIndex(prev => {
-        // Force a different selection
-        if (next === prev && images.length > 1) {
-          return (next + 1) % images.length;
-        }
-        return next;
-      });
-    };
-
-    // Set initial selection
-    setSelectedMeshIndex(Math.floor(Math.random() * images.length));
-    const intervalId = setInterval(updateSelectedImage, 1000);
-
     sceneRef.current = { scene, camera, renderer, imageMeshes, sphere, sphereGroup, raycaster }
 
     // Mouse handlers for dragging
@@ -184,7 +177,7 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
           });
         } else {
           // When not hovering, show selected image coordinates
-          const selectedMesh = imageMeshes[selectedMeshIndex]
+          const selectedMesh = imageMeshes[selectedMeshIndexRef.current]
           const worldPos = selectedMesh.getWorldPosition(new THREE.Vector3())
           setCoordinates({
             x: Math.round(worldPos.x * 100) / 100,
@@ -257,7 +250,7 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
         });
       } else {
         // When not hovering, show selected image coordinates
-        const selectedMesh = imageMeshes[selectedMeshIndex]
+        const selectedMesh = imageMeshes[selectedMeshIndexRef.current]
         const worldPos = selectedMesh.getWorldPosition(new THREE.Vector3())
         setCoordinates({
           x: Math.round(worldPos.x * 100) / 100,
@@ -295,8 +288,8 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
       })
 
       // Update border position and visibility
-      if (!coordinates?.isHovered && borderRef.current) {
-        const selectedMesh = imageMeshes[selectedMeshIndex];
+      if (!coordinates?.isHovered && borderRef.current && sceneRef.current) {
+        const selectedMesh = sceneRef.current.imageMeshes[selectedMeshIndexRef.current];
         borderRef.current.position.copy(selectedMesh.position);
         borderRef.current.rotation.copy(selectedMesh.rotation);
         borderRef.current.scale.copy(selectedMesh.scale);
@@ -305,11 +298,17 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
         borderRef.current.visible = false;
       }
 
-      // Remove the image material color update
-      imageMeshes.forEach((mesh) => {
-        const material = mesh.material as THREE.MeshBasicMaterial;
-        material.color.setHex(0xffffff);
-      });
+      // Update image materials
+      if (sceneRef.current) {
+        sceneRef.current.imageMeshes.forEach((mesh, index) => {
+          const material = mesh.material as THREE.MeshBasicMaterial;
+          if (index === selectedMeshIndexRef.current) {
+            material.color.setHex(0xffffff); // Full brightness for selected
+          } else {
+            material.color.setHex(0xcccccc); // Slightly dimmed for others
+          }
+        });
+      }
 
       renderer.render(scene, camera)
       requestAnimationFrame(animate)
@@ -323,7 +322,6 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
     animate()
 
     return () => {
-      clearInterval(intervalId);
       container.removeEventListener('mousedown', handleMouseDown)
       container.removeEventListener('mouseup', handleMouseUp)
       container.removeEventListener('mousemove', handleMouseMove)
