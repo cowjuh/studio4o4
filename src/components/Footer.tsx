@@ -27,9 +27,9 @@ const Footer = () => {
           </div>
           
           <div className="text-sm text-center md:text-right">
-            <p>© {currentYear} 4o4.space · Jenny Zhang</p>
+            <p>© {currentYear} 4o4.space</p>
             <p className="text-neutral-600">
-              Designed and built in 7 hours (Figma + Cursor)
+              Designed and built by Jenny Zhang
             </p>
           </div>
         </div>
