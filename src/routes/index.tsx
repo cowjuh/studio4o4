@@ -58,23 +58,23 @@ export const Route = createFileRoute("/")({
         description='Professional photography studio in Bushwick specializing in modeling digitals, headshots, and editorial photography.'
         path='/'
       />
-      <div className='h-full w-full mx-auto flex gap-2 items-start justify-between'>
-        <div className='lg:px-8 px-2 flex-1 h-full flex items-center justify-center border border-black rounded border-dashed'>
+      <div className='h-full w-full mx-auto flex flex-col lg:flex-row gap-2 items-start justify-between'>
+        <div className='lg:px-8 px-2 flex-1 h-full flex items-center justify-center border border-black rounded border-dashed w-full'>
           <div className='relative w-full flex items-center justify-center'>
             <div className='absolute inset-0 flex items-center justify-center pointer-events-none z-10'>
               <div className='w-full max-w-5xl flex justify-between px-8'>
-                <span className='text-7xl font-medium'>4o4</span>
-                <span className='text-7xl font-medium'>STUDIO</span>
+                <span className='lg:text-7xl text-5xl font-medium'>4o4</span>
+                <span className='lg:text-7xl text-5xl font-medium'>STUDIO</span>
               </div>
             </div>
             <div className='w-full max-w-5xl mx-auto flex items-center justify-center h-full'>
-              <div className='w-[40vw] aspect-square max-w-[1000px]'>
+              <div className='lg:w-[40vw] w-full aspect-square max-w-[1000px]'>
                 <ThreeGallery images={ALL_IMAGES} />
               </div>
             </div>
           </div>
         </div>
-        <div className='basis-1/4 flex flex-col h-full justify-between'>
+        <div className='lg:basis-1/4 flex flex-col h-full justify-between w-full'>
           <div className='divide-y divide-black/70'>
             {SECTIONS.map((section, index) => (
               <SectionLink

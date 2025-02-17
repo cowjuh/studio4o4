@@ -12,7 +12,7 @@ const Footer = () => {
               href="https://www.instagram.com/cowjuh/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-neutral-700 hover:text-black"
+              className="text-neutral-500 hover:text-black"
             >
               <FaInstagram size={20} />
             </a>
@@ -20,7 +20,7 @@ const Footer = () => {
               href="https://github.com/cowjuh/studio4o4" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-neutral-700 hover:text-black"
+              className="text-neutral-500 hover:text-black"
             >
               <FaGithub size={20} />
             </a>

@@ -23,10 +23,7 @@ const SectionLink = ({ index, title, path, images }: SectionLinkProps) => {
                     key={imgIndex}
                     src={image}
                     alt={`${title} preview ${imgIndex + 1}`}
-                    className='h-[40px] w-[40px] min-h-[40px] min-w-[40px] object-cover flex-shrink-0 transition-all group-hover:scale-[1.02] group-hover:translate-x-[10px]'
-                    style={{
-                      transitionDelay: `${imgIndex * 50}ms`
-                    }}
+                    className='h-[40px] w-[40px] min-h-[40px] min-w-[40px] object-cover transition-all group-hover:blur-sm'
                   />
                 ))}
               </div>
