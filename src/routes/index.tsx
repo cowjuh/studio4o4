@@ -59,8 +59,18 @@ export const Route = createFileRoute('/')({
         path="/"
       />
       <div className="min-h-screen">
-        <div className="mb-12 lg:px-8 px-2">
-          <ThreeGallery images={ALL_IMAGES} />
+        <div className="lg:px-8 px-2">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center justify-center z-10">
+              <div className="w-full flex justify-between px-16">
+                <span className="text-4xl font-medium">4o4</span>
+                <span className="text-4xl font-medium">STUDIO</span>
+              </div>
+            </div>
+            <div className="w-full aspect-[16/9]">
+              <ThreeGallery images={ALL_IMAGES} />
+            </div>
+          </div>
         </div>
         <div className="divide-y divide-black/70">
           {SECTIONS.map((section) => (
