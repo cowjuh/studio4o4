@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
-import ImageGallery from '../../components/ImageGallery'
-import PageSection from '../../components/PageSection'
-import Head from '../../components/Head'
+import ImageGallery from '@components/ImageGallery'
+import PageSection from '@components/PageSection'
+import Head from '@components/Head'
 
 // Placeholder gallery images
 const GALLERY_IMAGES = [
@@ -10,7 +10,7 @@ const GALLERY_IMAGES = [
   'https://picsum.photos/seed/about3/800/1200',
 ]
 
-export const Route = createFileRoute('/about/')({
+export const Route = createFileRoute('/_service/about/')({
   component: () => (
     <>
       <Head

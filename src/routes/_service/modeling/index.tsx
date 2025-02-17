@@ -1,22 +1,22 @@
 import { createFileRoute } from '@tanstack/react-router'
-import ImageGallery from '../../components/ImageGallery'
-import PackageCard from '../../components/PackageCard'
-import PageSection from '../../components/PageSection'
-import Head from '../../components/Head'
-import BookingSection from '../../components/BookingSection'
-import LocationSection from '../../components/LocationSection'
-import CancellationSection from '../../components/CancellationSection'
+import ImageGallery from '@components/ImageGallery'
+import PackageCard from '@components/PackageCard'
+import PageSection from '@components/PageSection'
+import Head from '@components/Head'
+import BookingSection from '@components/BookingSection'
+import LocationSection from '@components/LocationSection'
+import CancellationSection from '@components/CancellationSection'
 
 // Import gallery images
-import leahDigitals1 from '../../assets/images/digitals/Leah Digitals0292 1.jpg'
-import leahDigitals2 from '../../assets/images/digitals/Leah Digitals0277 1.jpg'
-import leahDigitals3 from '../../assets/images/digitals/Leah Digitals0216 1.jpg'
-import leahDigitals4 from '../../assets/images/digitals/Leah Digitals0061 1.jpg'
-import img3450 from '../../assets/images/digitals/IMG_3450.jpg'
-import img3415 from '../../assets/images/digitals/IMG_3415.jpg'
-import img3405 from '../../assets/images/digitals/IMG_3405-Edit.jpg'
-import img3378 from '../../assets/images/digitals/IMG_3378-Edit.jpg'
-import img3356 from '../../assets/images/digitals/IMG_3356.jpg'
+import leahDigitals1 from '@assets/images/digitals/Leah Digitals0292 1.jpg'
+import leahDigitals2 from '@assets/images/digitals/Leah Digitals0277 1.jpg'
+import leahDigitals3 from '@assets/images/digitals/Leah Digitals0216 1.jpg'
+import leahDigitals4 from '@assets/images/digitals/Leah Digitals0061 1.jpg'
+import img3450 from '@assets/images/digitals/IMG_3450.jpg'
+import img3415 from '@assets/images/digitals/IMG_3415.jpg'
+import img3405 from '@assets/images/digitals/IMG_3405-Edit.jpg'
+import img3378 from '@assets/images/digitals/IMG_3378-Edit.jpg'
+import img3356 from '@assets/images/digitals/IMG_3356.jpg'
 
 // Gallery images array
 const GALLERY_IMAGES = [
@@ -31,7 +31,7 @@ const GALLERY_IMAGES = [
   img3356,
 ]
 
-export const Route = createFileRoute('/modeling/')({
+export const Route = createFileRoute('/_service/modeling/')({
   component: () => (
     <>
       <Head

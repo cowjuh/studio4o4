@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import ImageStack from './ImageStack'
+import { HomeIcon } from '@radix-ui/react-icons'
 
 type NavItem = {
   path: string;
@@ -79,6 +80,17 @@ const Sidebar = ({ orientation = 'vertical' }: SidebarProps) => {
         }
       `}
     >
+      <Link
+        to="/"
+        className="mb-4 flex items-center gap-2 text-neutral-700 hover:text-black transition-colors"
+      >
+        {({ isActive }) => (
+          <span className={`flex items-center gap-2 ${isActive ? 'font-semibold text-black' : ''}`}>
+            <HomeIcon className="w-4 h-4" />
+            <span>Home</span>
+          </span>
+        )}
+      </Link>
       {NAV_ITEMS.map((item) => (
         <Link
           key={item.path}

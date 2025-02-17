@@ -1,12 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Link } from '@tanstack/react-router'
-import Head from '../components/Head'
-import ThreeGallery from '../components/ThreeGallery'
+import Head from '@components/Head'
+import ThreeGallery from '@components/ThreeGallery'
 
 // Import images from each section
-import modelingImg1 from '../assets/images/digitals/Leah Digitals0292 1.jpg'
-import modelingImg2 from '../assets/images/digitals/Leah Digitals0277 1.jpg'
-import modelingImg3 from '../assets/images/digitals/IMG_3450.jpg'
+import modelingImg1 from '@assets/images/digitals/Leah Digitals0292 1.jpg'
+import modelingImg2 from '@assets/images/digitals/Leah Digitals0277 1.jpg'
+import modelingImg3 from '@assets/images/digitals/IMG_3450.jpg'
 
 // Collect all images for the 3D gallery
 const ALL_IMAGES = [
@@ -58,17 +58,19 @@ export const Route = createFileRoute('/')({
         description="Professional photography studio in Bushwick specializing in modeling digitals, headshots, and editorial photography."
         path="/"
       />
-      <div className="min-h-screen">
+      <div className="min-h-screen max-w-7xl w-full mx-auto">
         <div className="lg:px-8 px-2">
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center justify-center z-10">
-              <div className="w-full flex justify-between px-16">
-                <span className="text-4xl font-medium">4o4</span>
-                <span className="text-4xl font-medium">STUDIO</span>
+          <div className="relative w-full">
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+              <div className="w-full max-w-5xl flex justify-between">
+                <span className="text-6xl font-medium">4o4</span>
+                <span className="text-6xl font-medium">STUDIO</span>
               </div>
             </div>
-            <div className="w-full aspect-[16/9]">
-              <ThreeGallery images={ALL_IMAGES} />
+            <div className="w-full max-w-5xl mx-auto">
+              <div className="aspect-[16/9]">
+                <ThreeGallery images={ALL_IMAGES} />
+              </div>
             </div>
           </div>
         </div>

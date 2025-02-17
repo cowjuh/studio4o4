@@ -12,10 +12,11 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
-import { Route as ModelingIndexImport } from './routes/modeling/index'
-import { Route as HeadshotsIndexImport } from './routes/headshots/index'
-import { Route as EditorialIndexImport } from './routes/editorial/index'
-import { Route as AboutIndexImport } from './routes/about/index'
+import { Route as ServiceServiceImport } from './routes/_service/_service'
+import { Route as ServiceModelingIndexImport } from './routes/_service/modeling/index'
+import { Route as ServiceHeadshotsIndexImport } from './routes/_service/headshots/index'
+import { Route as ServiceEditorialIndexImport } from './routes/_service/editorial/index'
+import { Route as ServiceAboutIndexImport } from './routes/_service/about/index'
 
 // Create/Update Routes
 
@@ -25,26 +26,31 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const ModelingIndexRoute = ModelingIndexImport.update({
-  id: '/modeling/',
+const ServiceServiceRoute = ServiceServiceImport.update({
+  id: '/_service/_service',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ServiceModelingIndexRoute = ServiceModelingIndexImport.update({
+  id: '/_service/modeling/',
   path: '/modeling/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const HeadshotsIndexRoute = HeadshotsIndexImport.update({
-  id: '/headshots/',
+const ServiceHeadshotsIndexRoute = ServiceHeadshotsIndexImport.update({
+  id: '/_service/headshots/',
   path: '/headshots/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const EditorialIndexRoute = EditorialIndexImport.update({
-  id: '/editorial/',
+const ServiceEditorialIndexRoute = ServiceEditorialIndexImport.update({
+  id: '/_service/editorial/',
   path: '/editorial/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const AboutIndexRoute = AboutIndexImport.update({
-  id: '/about/',
+const ServiceAboutIndexRoute = ServiceAboutIndexImport.update({
+  id: '/_service/about/',
   path: '/about/',
   getParentRoute: () => rootRoute,
 } as any)
@@ -60,32 +66,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/about/': {
-      id: '/about/'
+    '/_service/_service': {
+      id: '/_service/_service'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof ServiceServiceImport
+      parentRoute: typeof rootRoute
+    }
+    '/_service/about/': {
+      id: '/_service/about/'
       path: '/about'
       fullPath: '/about'
-      preLoaderRoute: typeof AboutIndexImport
+      preLoaderRoute: typeof ServiceAboutIndexImport
       parentRoute: typeof rootRoute
     }
-    '/editorial/': {
-      id: '/editorial/'
+    '/_service/editorial/': {
+      id: '/_service/editorial/'
       path: '/editorial'
       fullPath: '/editorial'
-      preLoaderRoute: typeof EditorialIndexImport
+      preLoaderRoute: typeof ServiceEditorialIndexImport
       parentRoute: typeof rootRoute
     }
-    '/headshots/': {
-      id: '/headshots/'
+    '/_service/headshots/': {
+      id: '/_service/headshots/'
       path: '/headshots'
       fullPath: '/headshots'
-      preLoaderRoute: typeof HeadshotsIndexImport
+      preLoaderRoute: typeof ServiceHeadshotsIndexImport
       parentRoute: typeof rootRoute
     }
-    '/modeling/': {
-      id: '/modeling/'
+    '/_service/modeling/': {
+      id: '/_service/modeling/'
       path: '/modeling'
       fullPath: '/modeling'
-      preLoaderRoute: typeof ModelingIndexImport
+      preLoaderRoute: typeof ServiceModelingIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -95,58 +108,64 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutIndexRoute
-  '/editorial': typeof EditorialIndexRoute
-  '/headshots': typeof HeadshotsIndexRoute
-  '/modeling': typeof ModelingIndexRoute
+  '': typeof ServiceServiceRoute
+  '/about': typeof ServiceAboutIndexRoute
+  '/editorial': typeof ServiceEditorialIndexRoute
+  '/headshots': typeof ServiceHeadshotsIndexRoute
+  '/modeling': typeof ServiceModelingIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutIndexRoute
-  '/editorial': typeof EditorialIndexRoute
-  '/headshots': typeof HeadshotsIndexRoute
-  '/modeling': typeof ModelingIndexRoute
+  '': typeof ServiceServiceRoute
+  '/about': typeof ServiceAboutIndexRoute
+  '/editorial': typeof ServiceEditorialIndexRoute
+  '/headshots': typeof ServiceHeadshotsIndexRoute
+  '/modeling': typeof ServiceModelingIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/about/': typeof AboutIndexRoute
-  '/editorial/': typeof EditorialIndexRoute
-  '/headshots/': typeof HeadshotsIndexRoute
-  '/modeling/': typeof ModelingIndexRoute
+  '/_service/_service': typeof ServiceServiceRoute
+  '/_service/about/': typeof ServiceAboutIndexRoute
+  '/_service/editorial/': typeof ServiceEditorialIndexRoute
+  '/_service/headshots/': typeof ServiceHeadshotsIndexRoute
+  '/_service/modeling/': typeof ServiceModelingIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/editorial' | '/headshots' | '/modeling'
+  fullPaths: '/' | '' | '/about' | '/editorial' | '/headshots' | '/modeling'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/editorial' | '/headshots' | '/modeling'
+  to: '/' | '' | '/about' | '/editorial' | '/headshots' | '/modeling'
   id:
     | '__root__'
     | '/'
-    | '/about/'
-    | '/editorial/'
-    | '/headshots/'
-    | '/modeling/'
+    | '/_service/_service'
+    | '/_service/about/'
+    | '/_service/editorial/'
+    | '/_service/headshots/'
+    | '/_service/modeling/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutIndexRoute: typeof AboutIndexRoute
-  EditorialIndexRoute: typeof EditorialIndexRoute
-  HeadshotsIndexRoute: typeof HeadshotsIndexRoute
-  ModelingIndexRoute: typeof ModelingIndexRoute
+  ServiceServiceRoute: typeof ServiceServiceRoute
+  ServiceAboutIndexRoute: typeof ServiceAboutIndexRoute
+  ServiceEditorialIndexRoute: typeof ServiceEditorialIndexRoute
+  ServiceHeadshotsIndexRoute: typeof ServiceHeadshotsIndexRoute
+  ServiceModelingIndexRoute: typeof ServiceModelingIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutIndexRoute: AboutIndexRoute,
-  EditorialIndexRoute: EditorialIndexRoute,
-  HeadshotsIndexRoute: HeadshotsIndexRoute,
-  ModelingIndexRoute: ModelingIndexRoute,
+  ServiceServiceRoute: ServiceServiceRoute,
+  ServiceAboutIndexRoute: ServiceAboutIndexRoute,
+  ServiceEditorialIndexRoute: ServiceEditorialIndexRoute,
+  ServiceHeadshotsIndexRoute: ServiceHeadshotsIndexRoute,
+  ServiceModelingIndexRoute: ServiceModelingIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -160,26 +179,30 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/about/",
-        "/editorial/",
-        "/headshots/",
-        "/modeling/"
+        "/_service/_service",
+        "/_service/about/",
+        "/_service/editorial/",
+        "/_service/headshots/",
+        "/_service/modeling/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/about/": {
-      "filePath": "about/index.tsx"
+    "/_service/_service": {
+      "filePath": "_service/_service.tsx"
     },
-    "/editorial/": {
-      "filePath": "editorial/index.tsx"
+    "/_service/about/": {
+      "filePath": "_service/about/index.tsx"
     },
-    "/headshots/": {
-      "filePath": "headshots/index.tsx"
+    "/_service/editorial/": {
+      "filePath": "_service/editorial/index.tsx"
     },
-    "/modeling/": {
-      "filePath": "modeling/index.tsx"
+    "/_service/headshots/": {
+      "filePath": "_service/headshots/index.tsx"
+    },
+    "/_service/modeling/": {
+      "filePath": "_service/modeling/index.tsx"
     }
   }
 }

@@ -1,11 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router'
-import ImageGallery from '../../components/ImageGallery'
-import PackageCard from '../../components/PackageCard'
-import PageSection from '../../components/PageSection'
-import Head from '../../components/Head'
-import BookingSection from '../../components/BookingSection'
-import LocationSection from '../../components/LocationSection'
-import CancellationSection from '../../components/CancellationSection'
+import ImageGallery from '@components/ImageGallery'
+import PackageCard from '@components/PackageCard'
+import PageSection from '@components/PageSection'
+import Head from '@components/Head'
+import BookingSection from '@components/BookingSection'
+import LocationSection from '@components/LocationSection'
+import CancellationSection from '@components/CancellationSection'
 
 // Placeholder gallery images
 const GALLERY_IMAGES = [
@@ -16,7 +16,7 @@ const GALLERY_IMAGES = [
   'https://picsum.photos/seed/headshots5/800/1200',
 ]
 
-export const Route = createFileRoute('/headshots/')({
+export const Route = createFileRoute('/_service/headshots/')({
   component: () => (
     <>
       <Head
