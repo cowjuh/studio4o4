@@ -315,14 +315,14 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
   }, [images])
 
   return (
-    <div className="relative">
+    <div className='w-full h-full'>
       <div 
         ref={containerRef} 
-        className="relative min-h-[40vh] rounded-lg cursor-move"
+        className="relative w-full h-full rounded-lg cursor-move"
       >
         <canvas
           ref={canvasRef}
-          className="h-full"
+          className="h-fit w-fit"
         />
         <div 
           ref={coordinatesRef}
