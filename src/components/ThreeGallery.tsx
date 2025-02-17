@@ -1,14 +1,26 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 
 interface ThreeGalleryProps {
   images: string[]
 }
 
+type Coordinates = {
+  x: number;
+  y: number;
+  z: number;
+  isHovered?: boolean;
+} | null;
+
 const ThreeGallery = ({ images }: ThreeGalleryProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const mouseRef = useRef({ x: 0, y: 0 })
+  const mouseRef = useRef(new THREE.Vector2())
+  const [coordinates, setCoordinates] = useState<Coordinates>(null);
+  const [selectedMeshIndex, setSelectedMeshIndex] = useState<number>(0);
+  const currentSelectionRef = useRef<number>(0);
+  const borderRef = useRef<THREE.LineSegments | null>(null);
+  const timeRef = useRef<number>(0);
   const dragRef = useRef({ 
     isDragging: false, 
     previousX: 0, 
@@ -23,6 +35,7 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
     imageMeshes: THREE.Mesh[]
     sphere: THREE.LineSegments
     sphereGroup: THREE.Group
+    raycaster: THREE.Raycaster
   }>()
 
   useEffect(() => {
@@ -42,6 +55,7 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
       alpha: true,
       antialias: true,
     })
+    const raycaster = new THREE.Raycaster()
 
     renderer.setSize(container.clientWidth, container.clientHeight)
     camera.position.z = 12 // Moved camera further back to see more space around the sphere
@@ -66,7 +80,22 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
     // Create image planes
     const imageMeshes: THREE.Mesh[] = []
     const textureLoader = new THREE.TextureLoader()
-    const imageSize = 1.8 // Increased from 1.2 for larger images
+    const imageSize = 1.8
+    const defaultMaterial = new THREE.MeshBasicMaterial({
+      side: THREE.DoubleSide,
+      transparent: true,
+    });
+
+    // Create border for highlighting
+    const borderGeometry = new THREE.EdgesGeometry(new THREE.PlaneGeometry(imageSize + 0.1, imageSize + 0.1));
+    const borderMaterial = new THREE.LineBasicMaterial({ 
+      color: 0xff0000,
+      linewidth: 2,
+    });
+    const border = new THREE.LineSegments(borderGeometry, borderMaterial);
+    border.visible = false;
+    sphereGroup.add(border);
+    borderRef.current = border;
 
     // Calculate points on sphere using spherical fibonacci distribution
     const getPointOnSphere = (index: number, total: number) => {
@@ -83,22 +112,37 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
     images.forEach((image, index) => {
       const texture = textureLoader.load(image)
       const geometry = new THREE.PlaneGeometry(imageSize, imageSize)
-      const material = new THREE.MeshBasicMaterial({
-        map: texture,
-        side: THREE.DoubleSide,
-        transparent: true,
-      })
+      const material = defaultMaterial.clone()
+      material.map = texture
       const mesh = new THREE.Mesh(geometry, material)
 
-      // Position using spherical fibonacci distribution
       const point = getPointOnSphere(index, images.length)
       mesh.position.set(point.x, point.y, point.z)
+
+      // Store the initial world position
+      mesh.userData.initialPosition = new THREE.Vector3(point.x, point.y, point.z)
 
       sphereGroup.add(mesh)
       imageMeshes.push(mesh)
     })
 
-    sceneRef.current = { scene, camera, renderer, imageMeshes, sphere, sphereGroup }
+    // Set initial random selection and start interval
+    const updateSelectedImage = () => {
+      const next = Math.floor(Math.random() * images.length);
+      setSelectedMeshIndex(prev => {
+        // Force a different selection
+        if (next === prev && images.length > 1) {
+          return (next + 1) % images.length;
+        }
+        return next;
+      });
+    };
+
+    // Set initial selection
+    setSelectedMeshIndex(Math.floor(Math.random() * images.length));
+    const intervalId = setInterval(updateSelectedImage, 1000);
+
+    sceneRef.current = { scene, camera, renderer, imageMeshes, sphere, sphereGroup, raycaster }
 
     // Mouse handlers for dragging
     const handleMouseDown = (event: MouseEvent) => {
@@ -120,9 +164,35 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
 
     const handleMouseMove = (event: MouseEvent) => {
       const rect = container.getBoundingClientRect()
-      mouseRef.current = {
-        x: ((event.clientX - rect.left) / container.clientWidth) * 2 - 1,
-        y: -((event.clientY - rect.top) / container.clientHeight) * 2 + 1,
+      const x = ((event.clientX - rect.left) / container.clientWidth) * 2 - 1
+      const y = -((event.clientY - rect.top) / container.clientHeight) * 2 + 1
+      
+      mouseRef.current.set(x, y)
+
+      if (sceneRef.current) {
+        const { raycaster, camera, imageMeshes } = sceneRef.current
+        raycaster.setFromCamera(mouseRef.current, camera)
+        const intersects = raycaster.intersectObjects(imageMeshes)
+        
+        if (intersects.length > 0) {
+          const worldPos = intersects[0].object.getWorldPosition(new THREE.Vector3())
+          setCoordinates({
+            x: Math.round(worldPos.x * 100) / 100,
+            y: Math.round(worldPos.y * 100) / 100,
+            z: Math.round(worldPos.z * 100) / 100,
+            isHovered: true
+          });
+        } else {
+          // When not hovering, show selected image coordinates
+          const selectedMesh = imageMeshes[selectedMeshIndex]
+          const worldPos = selectedMesh.getWorldPosition(new THREE.Vector3())
+          setCoordinates({
+            x: Math.round(worldPos.x * 100) / 100,
+            y: Math.round(worldPos.y * 100) / 100,
+            z: Math.round(worldPos.z * 100) / 100,
+            isHovered: false
+          });
+        }
       }
 
       if (dragRef.current.isDragging && sceneRef.current) {
@@ -154,8 +224,8 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
 
     // Animation
     const animate = () => {
-      if (!sceneRef.current) return
-      const { scene, camera, renderer, sphereGroup, imageMeshes } = sceneRef.current
+      if (!sceneRef.current || !borderRef.current) return
+      const { scene, camera, renderer, sphereGroup, imageMeshes, raycaster } = sceneRef.current
 
       const currentTime = Date.now()
       const timeSinceLastInteraction = currentTime - dragRef.current.lastInteractionTime
@@ -163,12 +233,39 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
 
       // Apply ambient rotation when not dragging and either never interacted or enough time has passed
       if (!dragRef.current.isDragging && (dragRef.current.lastInteractionTime === 0 || isInactive)) {
-        dragRef.current.sphereRotation.y += 0.002 // Gentle constant spin
+        timeRef.current += 0.01; // Increment time for oscillation
+        dragRef.current.sphereRotation.y += 0.002; // Horizontal spin
+        // Add gentle vertical oscillation using sine wave
+        dragRef.current.sphereRotation.x = Math.sin(timeRef.current) * 0.1;
       }
 
       // Update sphere group rotation based on drag
       sphereGroup.rotation.y = dragRef.current.sphereRotation.y
       sphereGroup.rotation.x = dragRef.current.sphereRotation.x
+
+      // Update coordinates in animation loop
+      raycaster.setFromCamera(mouseRef.current, camera)
+      const intersects = raycaster.intersectObjects(imageMeshes)
+      
+      if (intersects.length > 0) {
+        const worldPos = intersects[0].object.getWorldPosition(new THREE.Vector3())
+        setCoordinates({
+          x: Math.round(worldPos.x * 100) / 100,
+          y: Math.round(worldPos.y * 100) / 100,
+          z: Math.round(worldPos.z * 100) / 100,
+          isHovered: true
+        });
+      } else {
+        // When not hovering, show selected image coordinates
+        const selectedMesh = imageMeshes[selectedMeshIndex]
+        const worldPos = selectedMesh.getWorldPosition(new THREE.Vector3())
+        setCoordinates({
+          x: Math.round(worldPos.x * 100) / 100,
+          y: Math.round(worldPos.y * 100) / 100,
+          z: Math.round(worldPos.z * 100) / 100,
+          isHovered: false
+        });
+      }
 
       // Gentle camera movement based on mouse when not dragging
       if (!dragRef.current.isDragging) {
@@ -197,6 +294,23 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
         mesh.scale.set(baseScale * scaleMultiplier, baseScale * scaleMultiplier, 1)
       })
 
+      // Update border position and visibility
+      if (!coordinates?.isHovered && borderRef.current) {
+        const selectedMesh = imageMeshes[selectedMeshIndex];
+        borderRef.current.position.copy(selectedMesh.position);
+        borderRef.current.rotation.copy(selectedMesh.rotation);
+        borderRef.current.scale.copy(selectedMesh.scale);
+        borderRef.current.visible = true;
+      } else if (borderRef.current) {
+        borderRef.current.visible = false;
+      }
+
+      // Remove the image material color update
+      imageMeshes.forEach((mesh) => {
+        const material = mesh.material as THREE.MeshBasicMaterial;
+        material.color.setHex(0xffffff);
+      });
+
       renderer.render(scene, camera)
       requestAnimationFrame(animate)
     }
@@ -209,6 +323,7 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
     animate()
 
     return () => {
+      clearInterval(intervalId);
       container.removeEventListener('mousedown', handleMouseDown)
       container.removeEventListener('mouseup', handleMouseUp)
       container.removeEventListener('mousemove', handleMouseMove)
@@ -228,18 +343,31 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
       })
       sphere.geometry.dispose()
       ;(sphere.material as THREE.LineBasicMaterial).dispose()
+      if (borderRef.current) {
+        borderRef.current.geometry.dispose();
+        (borderRef.current.material as THREE.LineBasicMaterial).dispose();
+      }
     }
   }, [images])
 
   return (
-    <div 
-      ref={containerRef} 
-      className="relative min-h-[40vh] rounded-lg cursor-move"
-    >
-      <canvas
-        ref={canvasRef}
-        className="h-full"
-      />
+    <div className="relative">
+      <div 
+        ref={containerRef} 
+        className="relative min-h-[40vh] rounded-lg cursor-move"
+      >
+        <canvas
+          ref={canvasRef}
+          className="h-full"
+        />
+      </div>
+      {coordinates && (
+        <div className="text-center font-mono text-sm">
+          <span className={coordinates.isHovered ? "text-black" : "text-red-500"}>
+            x: {coordinates.x}, y: {coordinates.y}, z: {coordinates.z}
+          </span>
+        </div>
+      )}
     </div>
   )
 }
