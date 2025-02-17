@@ -1,21 +1,32 @@
 import { createRootRoute, Outlet } from '@tanstack/react-router'
 import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
+import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 
-export const Route = createRootRoute({
-  component: () => (
+const RootComponent = () => {
+  return (
     <div className="h-full flex flex-col">
       <Navbar />
-      <div className="flex-1 flex justify-center">
-        <div className="max-w-7xl w-full mx-auto flex relative">
-          <div className="w-[240px] fixed top-16 bottom-0">
-            <Sidebar />
+      <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex justify-center">
+          <div className="max-w-7xl w-full mx-auto flex">
+            <div className="hidden md:block w-[240px] sticky top-16 h-[calc(100vh-4rem)]">
+              <Sidebar orientation="vertical" />
+            </div>
+
+            <main className="flex-1 p-4 md:pl-8">
+              <Outlet />
+            </main>
           </div>
-          <main className="flex-1 ml-[240px]">
-            <Outlet />
-          </main>
         </div>
       </div>
+      <Footer />
+      <TanStackRouterDevtools />
     </div>
-  ),
+  )
+}
+
+export const Route = createRootRoute({
+  component: RootComponent,
 }) 

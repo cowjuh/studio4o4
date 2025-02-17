@@ -8,6 +8,10 @@ type NavItem = {
   previewImages: string[];
 }
 
+interface SidebarProps {
+  orientation?: 'horizontal' | 'vertical';
+}
+
 const NAV_ITEMS: NavItem[] = [
   {
     path: '/modeling',
@@ -52,7 +56,7 @@ const NAV_ITEMS: NavItem[] = [
   },
 ]
 
-const Sidebar = () => {
+const Sidebar = ({ orientation = 'vertical' }: SidebarProps) => {
   const [hoveredPath, setHoveredPath] = useState<string | null>(null)
   const [mousePosition, setMousePosition] = useState<{ x: number; y: number } | null>(null)
 
@@ -66,7 +70,15 @@ const Sidebar = () => {
   }
 
   return (
-    <nav className="relative p-4 flex flex-col gap-2">
+    <nav 
+      className={`
+        relative p-4 
+        ${orientation === 'horizontal' 
+          ? 'flex flex-row gap-6 min-w-max py-3' 
+          : 'flex flex-col gap-2'
+        }
+      `}
+    >
       {NAV_ITEMS.map((item) => (
         <Link
           key={item.path}
@@ -76,13 +88,19 @@ const Sidebar = () => {
           onMouseMove={handleMouseMove}
         >
           {({ isActive }) => (
-            <span className={`text-base text-neutral-700 hover:text-black cursor-pointer transition-opacity ${isActive ? 'font-semibold underline text-black' : ''}`}>
+            <span className={`
+              text-base text-neutral-700 hover:text-black cursor-pointer 
+              transition-opacity whitespace-nowrap
+              ${isActive ? 'font-semibold underline text-black' : ''}
+            `}>
               {item.label}
-              <ImageStack 
-                images={item.previewImages} 
-                isVisible={hoveredPath === item.path} 
-                mousePosition={mousePosition}
-              />
+              {orientation === 'vertical' && (
+                <ImageStack 
+                  images={item.previewImages} 
+                  isVisible={hoveredPath === item.path} 
+                  mousePosition={mousePosition}
+                />
+              )}
             </span>
           )}
         </Link>
