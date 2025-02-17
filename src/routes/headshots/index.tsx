@@ -3,6 +3,7 @@ import ImageGallery from '../../components/ImageGallery'
 import PackageCard from '../../components/PackageCard'
 import PageSection from '../../components/PageSection'
 import Head from '../../components/Head'
+import AcuityBookingButton from '../../components/AcuityBookingButton'
 
 // Placeholder gallery images
 const GALLERY_IMAGES = [
@@ -56,13 +57,16 @@ export const Route = createFileRoute('/headshots/')({
         </PageSection>
 
         <PageSection title="Booking">
-          <div className="space-y-2">
-            <p className="text-sm">
-              To book, DM @cowjuh on IG or email bookings@4o4.space
-            </p>
-            <p className="text-sm">
-              Payment via Venmo, Zelle, or Cash
-            </p>
+          <div className="space-y-4">
+            <AcuityBookingButton className="w-full md:w-auto" />
+            <div className="space-y-2">
+              <p className="text-sm">
+                To book, DM @cowjuh on IG or email bookings@4o4.space
+              </p>
+              <p className="text-sm">
+                Payment via Venmo, Zelle, or Cash
+              </p>
+            </div>
           </div>
         </PageSection>
 

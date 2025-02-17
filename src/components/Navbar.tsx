@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { HamburgerMenuIcon, Cross1Icon } from '@radix-ui/react-icons'
+import AcuityBookingButton from './AcuityBookingButton'
 
 const NAV_ITEMS = [
   {
@@ -52,12 +53,7 @@ const Navbar = () => {
               <div>Inquiries</div>
               <div>IG: @cowjuh E: cowjuh@gmail.com</div>
             </div>
-            <Link 
-              to="/"
-              className="border border-black px-4 py-2 text-sm hover:bg-black hover:text-white transition-colors"
-            >
-              Book Now
-            </Link>
+            <AcuityBookingButton />
           </div>
 
           {/* Mobile Menu Button */}
@@ -102,13 +98,7 @@ const Navbar = () => {
               <div>IG: @cowjuh</div>
               <div>E: cowjuh@gmail.com</div>
             </div>
-            <Link 
-              to="/"
-              className="block border border-black px-4 py-2 text-sm text-center hover:bg-black hover:text-white transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Book Now
-            </Link>
+            <AcuityBookingButton className="block text-center" />
           </div>
         </div>
       )}
