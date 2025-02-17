@@ -4,7 +4,6 @@ import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/',
   plugins: [
     react(),
     TanStackRouterVite({
@@ -12,7 +11,4 @@ export default defineConfig({
       generatedRouteTree: './src/routeTree.gen.ts',
     }),
   ],
-  server: {
-    middleware: true,
-  },
 })
