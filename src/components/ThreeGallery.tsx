@@ -1,22 +1,15 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 
 interface ThreeGalleryProps {
   images: string[]
 }
 
-type Coordinates = {
-  x: number;
-  y: number;
-  z: number;
-  isHovered?: boolean;
-} | null;
-
 const ThreeGallery = ({ images }: ThreeGalleryProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mouseRef = useRef(new THREE.Vector2())
-  const [coordinates, setCoordinates] = useState<Coordinates>(null);
+  const coordinatesRef = useRef<HTMLDivElement>(null)
   const selectedMeshIndexRef = useRef<number>(0);
   const borderRef = useRef<THREE.LineSegments | null>(null);
   const timeRef = useRef<number>(0);
@@ -43,7 +36,7 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
       selectedMeshIndexRef.current = (selectedMeshIndexRef.current + 1) % images.length;
     };
 
-    const intervalId = setInterval(updateSelectedImage, 1000);
+    const intervalId = setInterval(updateSelectedImage, 3000);
     return () => clearInterval(intervalId);
   }, [images.length]);
 
@@ -162,32 +155,6 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
       
       mouseRef.current.set(x, y)
 
-      if (sceneRef.current) {
-        const { raycaster, camera, imageMeshes } = sceneRef.current
-        raycaster.setFromCamera(mouseRef.current, camera)
-        const intersects = raycaster.intersectObjects(imageMeshes)
-        
-        if (intersects.length > 0) {
-          const worldPos = intersects[0].object.getWorldPosition(new THREE.Vector3())
-          setCoordinates({
-            x: Math.round(worldPos.x * 100) / 100,
-            y: Math.round(worldPos.y * 100) / 100,
-            z: Math.round(worldPos.z * 100) / 100,
-            isHovered: true
-          });
-        } else {
-          // When not hovering, show selected image coordinates
-          const selectedMesh = imageMeshes[selectedMeshIndexRef.current]
-          const worldPos = selectedMesh.getWorldPosition(new THREE.Vector3())
-          setCoordinates({
-            x: Math.round(worldPos.x * 100) / 100,
-            y: Math.round(worldPos.y * 100) / 100,
-            z: Math.round(worldPos.z * 100) / 100,
-            isHovered: false
-          });
-        }
-      }
-
       if (dragRef.current.isDragging && sceneRef.current) {
         const deltaX = event.clientX - dragRef.current.previousX
         const deltaY = event.clientY - dragRef.current.previousY
@@ -217,7 +184,7 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
 
     // Animation
     const animate = () => {
-      if (!sceneRef.current || !borderRef.current) return
+      if (!sceneRef.current || !borderRef.current || !coordinatesRef.current) return
       const { scene, camera, renderer, sphereGroup, imageMeshes, raycaster } = sceneRef.current
 
       const currentTime = Date.now()
@@ -240,25 +207,24 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
       raycaster.setFromCamera(mouseRef.current, camera)
       const intersects = raycaster.intersectObjects(imageMeshes)
       
-      if (intersects.length > 0) {
-        const worldPos = intersects[0].object.getWorldPosition(new THREE.Vector3())
-        setCoordinates({
-          x: Math.round(worldPos.x * 100) / 100,
-          y: Math.round(worldPos.y * 100) / 100,
-          z: Math.round(worldPos.z * 100) / 100,
-          isHovered: true
-        });
+      let worldPos: THREE.Vector3;
+      const isHovered = intersects.length > 0;
+      
+      if (isHovered) {
+        worldPos = intersects[0].object.getWorldPosition(new THREE.Vector3())
       } else {
-        // When not hovering, show selected image coordinates
         const selectedMesh = imageMeshes[selectedMeshIndexRef.current]
-        const worldPos = selectedMesh.getWorldPosition(new THREE.Vector3())
-        setCoordinates({
-          x: Math.round(worldPos.x * 100) / 100,
-          y: Math.round(worldPos.y * 100) / 100,
-          z: Math.round(worldPos.z * 100) / 100,
-          isHovered: false
-        });
+        worldPos = selectedMesh.getWorldPosition(new THREE.Vector3())
       }
+
+      const screenPos = worldPos.clone().project(camera)
+      const screenX = (screenPos.x * 0.5 + 0.5) * container.clientWidth
+      const screenY = (-screenPos.y * 0.5 + 0.5) * container.clientHeight
+
+      // Update coordinates display directly
+      coordinatesRef.current.style.left = `${screenX}px`
+      coordinatesRef.current.style.top = `${screenY + 50}px`
+      coordinatesRef.current.textContent = `x: ${Math.round(worldPos.x * 100) / 100}, y: ${Math.round(worldPos.y * 100) / 100}, z: ${Math.round(worldPos.z * 100) / 100}`
 
       // Gentle camera movement based on mouse when not dragging
       if (!dragRef.current.isDragging) {
@@ -288,7 +254,7 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
       })
 
       // Update border position and visibility
-      if (!coordinates?.isHovered && borderRef.current && sceneRef.current) {
+      if (!isHovered && borderRef.current && sceneRef.current) {
         const selectedMesh = sceneRef.current.imageMeshes[selectedMeshIndexRef.current];
         borderRef.current.position.copy(selectedMesh.position);
         borderRef.current.rotation.copy(selectedMesh.rotation);
@@ -358,14 +324,14 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
           ref={canvasRef}
           className="h-full"
         />
+        <div 
+          ref={coordinatesRef}
+          className="absolute pointer-events-none font-mono text-sm text-red-500"
+          style={{ 
+            transform: 'translate(-50%, 0)',
+          }}
+        />
       </div>
-      {coordinates && (
-        <div className="text-center font-mono text-sm">
-          <span className={coordinates.isHovered ? "text-black" : "text-red-500"}>
-            x: {coordinates.x}, y: {coordinates.y}, z: {coordinates.z}
-          </span>
-        </div>
-      )}
     </div>
   )
 }

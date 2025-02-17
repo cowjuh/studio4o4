@@ -52,7 +52,7 @@ const SECTIONS = [
 
 export const Route = createFileRoute('/')({
   component: () => (
-    <>
+    <div className='flex flex-col'>
       <Head
         title="4o4.space STUDIO - Photography Studio in Bushwick, Brooklyn"
         description="Professional photography studio in Bushwick specializing in modeling digitals, headshots, and editorial photography."
@@ -68,7 +68,7 @@ export const Route = createFileRoute('/')({
               </div>
             </div>
             <div className="w-full max-w-5xl mx-auto">
-              <div className="aspect-[16/9]">
+              <div>
                 <ThreeGallery images={ALL_IMAGES} />
               </div>
             </div>
@@ -112,6 +112,6 @@ export const Route = createFileRoute('/')({
           ))}
         </div>
       </div>
-    </>
+    </div>
   ),
 }) 
