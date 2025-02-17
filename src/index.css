@@ -2,11 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Helvetica Now Text';
+  src: url('./assets/fonts/HelveticaNowText-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Custom styles */
 html, body {
   margin: 0;
   height: 100%;
   overflow: hidden;
+  font-family: 'Helvetica Now Text', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 #root {
