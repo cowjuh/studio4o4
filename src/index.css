@@ -23,3 +23,136 @@ html, body {
   overflow-y: auto;
   overscroll-behavior-y: none;
 }
+
+/* Acuity Modal Styles */
+body.acuity-modal-visible {
+  overflow: hidden;
+}
+
+body.acuity-modal-visible .acuity-embed-modal iframe {
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin: 0;
+}
+
+.acuity-embed-modal {
+  display: block !important;
+  position: fixed;
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: -10;
+  opacity: 0;
+  transition: opacity 0.2s, z-index 0s 0.2s;
+  text-align: center;
+  overflow: hidden;
+  overflow-y: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  visibility: hidden;
+}
+
+.acuity-modal .acuity-embed-modal > * {
+  display: inline-block;
+  white-space: normal;
+  vertical-align: middle;
+  text-align: left;
+}
+
+.acuity-modal .acuity-embed-modal:before {
+  display: inline-block;
+  overflow: hidden;
+  width: 0;
+  height: 100%;
+  vertical-align: middle;
+  content: "";
+}
+
+.acuity-modal.acuity-modal-visible .acuity-embed-modal {
+  visibility: visible;
+  z-index: 20001;
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+.acuity-modal.acuity-modal-visible .acuity-modal-inner {
+  z-index: 1;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.acuity-modal-inner {
+  padding: 2rem;
+  position: relative;
+  max-width: 98%;
+  max-height: 98%;
+  overflow: hidden;
+  overflow-y: auto;
+  background: #fff;
+  z-index: -1;
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.2s, transform 0.2s, z-index 0s 0.2s;
+}
+
+.acuity-modal-content,
+.acuity-modal-inner {
+  box-sizing: content-box;
+}
+
+.acuity-modal-content {
+  -webkit-overflow-scrolling: touch;
+  overflow: auto;
+  line-height: 22px;
+  font-size: 15px;
+}
+
+/* Modified close button styles */
+.acuity-modal-close {
+  position: absolute;
+  z-index: 2;
+  right: 2rem;
+  top: 2rem;
+  height: 32px;
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: black;
+  background: transparent;
+  border: none;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.acuity-modal-close:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.acuity-embed-button {
+  background: #3177ca;
+  padding: 8px 12px;
+  border: 0;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-block;
+  color: #fff;
+}
+
+.acuity-embed-button:active,
+.acuity-embed-button:focus,
+.acuity-embed-button:hover,
+.acuity-embed-button:visited {
+  color: #fff;
+}
+
+.acuity-embed-button:hover {
+  filter: brightness(112%);
+}

@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { HamburgerMenuIcon, Cross1Icon } from '@radix-ui/react-icons'
 import AcuityBookingButton from './AcuityBookingButton'
+import logo from '../assets/images/auxiliary/IMG_8449.png'
 
 const NAV_ITEMS = [
   {
@@ -29,29 +30,31 @@ const Navbar = () => {
     <nav className="sticky top-0 bg-white border-b border-black/70 z-50">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center">
         <div className="flex justify-between items-center w-full">
-          <Link to="/" className="flex items-center space-x-4 hover:opacity-80 transition-opacity">
-            <div className="h-10 w-10 overflow-hidden">
+          <Link to="/" className="flex items-center space-x-8 hover:opacity-80 transition-opacity">
+            <div className="flex items-center space-x-4">
+            <div className="h-10 overflow-hidden">
               <img 
-                src="https://picsum.photos/40" 
+                src={logo} 
                 alt="4o4.space Studio" 
-                className="h-full w-full object-cover"
-              />
+                className="h-full w-auto"
+                />
             </div>
             <div className="flex flex-col">
-              <span className="font-medium">STUDIO 4o4</span>
-              <span className="text-sm">4o4.space</span>
+              <span className="font-medium">4o4STUDIO</span>
+              <span className="text-sm text-neutral-500">at 4o4.space</span>
             </div>
+                </div>
             <div className="ml-6 text-sm hidden md:block">
               <div>Bushwick</div>
-              <div>Brooklyn, NY, 11237</div>
+              <div className="text-neutral-500">Brooklyn, NY, 11237</div>
             </div>
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-8">
             <div className="text-sm">
               <div>Inquiries</div>
-              <div>IG: @cowjuh E: cowjuh@gmail.com</div>
+              <div className="text-neutral-500">IG: @cowjuh E: cowjuh@gmail.com</div>
             </div>
             <AcuityBookingButton />
           </div>
