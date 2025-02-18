@@ -1,19 +1,28 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useState } from 'react'
 import ImageGallery from '@components/ImageGallery'
 import PageSection from '@components/PageSection'
 import Head from '@components/Head'
+import PreviewImage from '@components/PreviewImage'
 
 const imageModules = import.meta.glob('@assets/images/editorial/*.{png,jpg,jpeg}', { eager: true })
 const GALLERY_IMAGES = Object.values(imageModules).map(module => (module as { default: string }).default)
 
-export const Route = createFileRoute('/_service/editorial/')({
-  component: () => (
+const EditorialPage = () => {
+  const [previewImage, setPreviewImage] = useState(GALLERY_IMAGES[0])
+
+  return (
     <>
       <Head
         title="Editorial & Fine Art Photography"
         description="Creative editorial and fine art photography in Brooklyn. Artistic direction and high-end fashion photography for magazines, portfolios, and personal projects."
-        image={GALLERY_IMAGES[0]}
+        image={previewImage}
         path="/editorial"
+      />
+      <PreviewImage 
+        title="Editorial & Fine Art"
+        backgroundImage={GALLERY_IMAGES[0]}
+        onPreviewGenerated={setPreviewImage}
       />
       <div className="lg:px-8 px-2 py-8">
         <h1 className="text-2xl font-medium mb-8">Editorial & Fine Art</h1>
@@ -32,5 +41,9 @@ export const Route = createFileRoute('/_service/editorial/')({
         </PageSection>
       </div>
     </>
-  ),
+  )
+}
+
+export const Route = createFileRoute('/_service/editorial/')({
+  component: EditorialPage,
 }) 

@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useState } from 'react'
 import ImageGallery from '@components/ImageGallery'
 import PackageCard from '@components/PackageCard'
 import PageSection from '@components/PageSection'
@@ -6,19 +7,27 @@ import Head from '@components/Head'
 import BookingSection from '@components/BookingSection'
 import LocationSection from '@components/LocationSection'
 import CancellationSection from '@components/CancellationSection'
+import PreviewImage from '@components/PreviewImage'
 
 // Dynamically import all images from the modeling directory
 const imageModules = import.meta.glob('@assets/images/digitals/*.{png,jpg,jpeg}', { eager: true })
 const GALLERY_IMAGES = Object.values(imageModules).map(module => (module as { default: string }).default)
 
-export const Route = createFileRoute('/_service/modeling/')({
-  component: () => (
+const ModelingPage = () => {
+  const [previewImage, setPreviewImage] = useState(GALLERY_IMAGES[0])
+
+  return (
     <>
       <Head
         title="Modeling Digitals Photography"
         description="Professional modeling digitals photography in Brooklyn. High-quality comp cards and portfolio shots for models. Packages starting at $175."
-        image={GALLERY_IMAGES[0]}
+        image={previewImage}
         path="/modeling"
+      />
+      <PreviewImage 
+        title="Modeling Digitals"
+        backgroundImage={GALLERY_IMAGES[0]}
+        onPreviewGenerated={setPreviewImage}
       />
       <div className="lg:px-8 px-2 py-8">
         <h1 className="text-2xl font-medium mb-8">Modeling Digitals</h1>
@@ -70,5 +79,9 @@ export const Route = createFileRoute('/_service/modeling/')({
         <CancellationSection />
       </div>
     </>
-  ),
+  )
+}
+
+export const Route = createFileRoute('/_service/modeling/')({
+  component: ModelingPage
 }) 

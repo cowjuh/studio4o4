@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useState } from 'react'
 import ImageGallery from '@components/ImageGallery'
 import PackageCard from '@components/PackageCard'
 import PageSection from '@components/PageSection'
@@ -6,18 +7,26 @@ import Head from '@components/Head'
 import BookingSection from '@components/BookingSection'
 import LocationSection from '@components/LocationSection'
 import CancellationSection from '@components/CancellationSection'
+import PreviewImage from '@components/PreviewImage'
 
 const imageModules = import.meta.glob('@assets/images/headshots/*.{png,jpg,jpeg}', { eager: true })
 const GALLERY_IMAGES = Object.values(imageModules).map(module => (module as { default: string }).default)
 
-export const Route = createFileRoute('/_service/headshots/')({
-  component: () => (
+const HeadshotsPage = () => {
+  const [previewImage, setPreviewImage] = useState(GALLERY_IMAGES[0])
+
+  return (
     <>
       <Head
         title="Professional Headshot Photography"
         description="Professional headshot photography in Brooklyn. Perfect for LinkedIn, corporate profiles, and acting portfolios. Natural lighting and expert direction."
-        image={GALLERY_IMAGES[0]}
+        image={previewImage}
         path="/headshots"
+      />
+      <PreviewImage 
+        title="Headshots"
+        backgroundImage={GALLERY_IMAGES[0]}
+        onPreviewGenerated={setPreviewImage}
       />
       <div className="lg:px-8 px-2 py-8">
         <h1 className="text-2xl font-medium mb-8">Headshots</h1>
@@ -57,5 +66,9 @@ export const Route = createFileRoute('/_service/headshots/')({
         <CancellationSection />
       </div>
     </>
-  ),
+  )
+}
+
+export const Route = createFileRoute('/_service/headshots/')({
+  component: HeadshotsPage,
 }) 
