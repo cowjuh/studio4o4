@@ -7,14 +7,8 @@ import BookingSection from '@components/BookingSection'
 import LocationSection from '@components/LocationSection'
 import CancellationSection from '@components/CancellationSection'
 
-// Placeholder gallery images
-const GALLERY_IMAGES = [
-  'https://picsum.photos/seed/headshots1/800/1200',
-  'https://picsum.photos/seed/headshots2/800/1200',
-  'https://picsum.photos/seed/headshots3/800/1200',
-  'https://picsum.photos/seed/headshots4/800/1200',
-  'https://picsum.photos/seed/headshots5/800/1200',
-]
+const imageModules = import.meta.glob('@assets/images/headshots/*.{png,jpg,jpeg}', { eager: true })
+const GALLERY_IMAGES = Object.values(imageModules).map(module => (module as { default: string }).default)
 
 export const Route = createFileRoute('/_service/headshots/')({
   component: () => (

@@ -1,53 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Head from "@components/Head";
 import ThreeGallery from "@components/ThreeGallery";
-import SectionLink from "@components/SectionLink";
 
-// Import images from each section
-import modelingImg1 from "@assets/images/digitals/Leah Digitals0292 1.jpg";
-import modelingImg2 from "@assets/images/digitals/Leah Digitals0277 1.jpg";
-import modelingImg3 from "@assets/images/digitals/IMG_3450.jpg";
+type ImageModule = { default: string }
 
-// Collect all images for the 3D gallery
+const modelingImages = import.meta.glob<ImageModule>('@assets/images/digitals/*.{png,jpg,jpeg}', { eager: true })
+const headshotsImages = import.meta.glob<ImageModule>('@assets/images/headshots/*.{png,jpg,jpeg}', { eager: true })
+const editorialImages = import.meta.glob<ImageModule>('@assets/images/editorial/*.{png,jpg,jpeg}', { eager: true })
+
+const getFirst4Images = (moduleObj: Record<string, ImageModule>) => {
+  return Object.values(moduleObj)
+    .map(module => module.default)
+    .slice(0, 4)
+}
+
+const getAllImages = (moduleObj: Record<string, ImageModule>) => {
+  return Object.values(moduleObj)
+    .map(module => module.default)
+}
+
 const ALL_IMAGES = [
-  modelingImg1,
-  modelingImg2,
-  modelingImg3,
-  "https://picsum.photos/seed/headshots1/800/1200",
-  "https://picsum.photos/seed/headshots2/800/1200",
-  "https://picsum.photos/seed/headshots3/800/1200",
-  "https://picsum.photos/seed/editorial1/800/1200",
-  "https://picsum.photos/seed/editorial2/800/1200",
-  "https://picsum.photos/seed/editorial3/800/1200",
-];
-
-const SECTIONS = [
-  {
-    title: "Modeling Digitals",
-    path: "/modeling",
-    services: ["3D", "BRANDING", "PRODUCTION", "SOCIAL"],
-    images: [modelingImg1, modelingImg2, modelingImg3],
-  },
-  {
-    title: "Headshots",
-    path: "/headshots",
-    services: ["3D", "BRANDING", "DIGITAL"],
-    images: [
-      "https://picsum.photos/seed/headshots1/800/1200",
-      "https://picsum.photos/seed/headshots2/800/1200",
-      "https://picsum.photos/seed/headshots3/800/1200",
-    ],
-  },
-  {
-    title: "Editorial & Fine Art",
-    path: "/editorial",
-    services: ["ADVERTISING", "BRANDING", "DIGITAL", "STRATEGY"],
-    images: [
-      "https://picsum.photos/seed/editorial1/800/1200",
-      "https://picsum.photos/seed/editorial2/800/1200",
-      "https://picsum.photos/seed/editorial3/800/1200",
-    ],
-  },
+  ...getFirst4Images(modelingImages),
+  ...getFirst4Images(headshotsImages),
+  ...getAllImages(editorialImages),
 ];
 
 export const Route = createFileRoute("/")({
@@ -71,30 +46,6 @@ export const Route = createFileRoute("/")({
               <div className='lg:w-[40vw] w-full aspect-square max-w-[1000px]'>
                 <ThreeGallery images={ALL_IMAGES} />
               </div>
-            </div>
-          </div>
-        </div>
-        <div className='lg:basis-1/4 flex flex-col h-full justify-between w-full'>
-          <div className='divide-y divide-black/70'>
-            {SECTIONS.map((section, index) => (
-              <SectionLink
-                key={section.path}
-                index={index}
-                title={section.title}
-                path={section.path}
-                images={section.images}
-              />
-            ))}
-          </div>
-          <div className='space-y-4'>
-            <div className='text-sm'>
-              Photography studio, installation space, and home.
-            </div>
-            <div className='divide-y divide-black/70'>
-              <SectionLink
-                title="About"
-                path="/about"
-              />
             </div>
           </div>
         </div>

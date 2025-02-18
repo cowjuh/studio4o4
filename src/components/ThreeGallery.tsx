@@ -82,14 +82,15 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
     // Create image planes
     const imageMeshes: THREE.Mesh[] = []
     const textureLoader = new THREE.TextureLoader()
-    const imageSize = 1.8
+    const baseSizes = [0.8, 1.0, 1.1, 1.2, 1.4] // More varied sizes, biased towards smaller
     const defaultMaterial = new THREE.MeshBasicMaterial({
       side: THREE.DoubleSide,
       transparent: true,
     });
 
     // Create border for highlighting
-    const borderGeometry = new THREE.EdgesGeometry(new THREE.PlaneGeometry(imageSize + 0.1, imageSize + 0.1));
+    const maxImageSize = Math.max(...baseSizes)
+    const borderGeometry = new THREE.EdgesGeometry(new THREE.PlaneGeometry(maxImageSize + 0.1, maxImageSize + 0.1));
     const borderMaterial = new THREE.LineBasicMaterial({ 
       color: 0xff0000,
       linewidth: 2,
@@ -113,6 +114,9 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
     // Create and position image planes
     images.forEach((image, index) => {
       const texture = textureLoader.load(image)
+      // Randomly select a size with bias towards smaller sizes
+      const sizeIndex = Math.floor(Math.pow(Math.random(), 1.5) * baseSizes.length)
+      const imageSize = baseSizes[sizeIndex]
       const geometry = new THREE.PlaneGeometry(imageSize, imageSize)
       const material = defaultMaterial.clone()
       material.map = texture
@@ -123,6 +127,7 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
 
       // Store the initial world position
       mesh.userData.initialPosition = new THREE.Vector3(point.x, point.y, point.z)
+      mesh.userData.baseSize = imageSize // Store base size for scaling
 
       sphereGroup.add(mesh)
       imageMeshes.push(mesh)
@@ -193,10 +198,19 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
 
       // Apply ambient rotation when not dragging and either never interacted or enough time has passed
       if (!dragRef.current.isDragging && (dragRef.current.lastInteractionTime === 0 || isInactive)) {
-        timeRef.current += 0.01; // Increment time for oscillation
-        dragRef.current.sphereRotation.y += 0.002; // Horizontal spin
-        // Add gentle vertical oscillation using sine wave
-        dragRef.current.sphereRotation.x = Math.sin(timeRef.current) * 0.1;
+        timeRef.current += 0.005; // Slower time increment for more gradual changes
+        
+        // Create a varying diagonal rotation by combining different frequencies
+        const baseRotation = 0.001; // Slower base rotation speed
+        const variationAmplitude = 0.0005; // Smaller amplitude for subtle variation
+        
+        // Primary diagonal rotation
+        dragRef.current.sphereRotation.y += baseRotation;
+        dragRef.current.sphereRotation.x += baseRotation * 0.7; // Slightly less on X for diagonal effect
+        
+        // Add subtle variations to the rotation axes
+        dragRef.current.sphereRotation.y += Math.sin(timeRef.current * 0.3) * variationAmplitude;
+        dragRef.current.sphereRotation.x += Math.cos(timeRef.current * 0.2) * variationAmplitude;
       }
 
       // Update sphere group rotation based on drag
@@ -247,22 +261,20 @@ const ThreeGallery = ({ images }: ThreeGalleryProps) => {
         const meshWorldPos = mesh.getWorldPosition(new THREE.Vector3())
         const distanceFromCenter = meshWorldPos.length()
         
-        // Scale images based on their position
-        const baseScale = 1
+        // Scale images based on their position and base size
+        const baseScale = mesh.userData.baseSize
         const scaleMultiplier = Math.max(0.6, 1 - (distanceFromCenter * 0.1))
         mesh.scale.set(baseScale * scaleMultiplier, baseScale * scaleMultiplier, 1)
-      })
 
-      // Update border position and visibility
-      if (!isHovered && borderRef.current && sceneRef.current) {
-        const selectedMesh = sceneRef.current.imageMeshes[selectedMeshIndexRef.current];
-        borderRef.current.position.copy(selectedMesh.position);
-        borderRef.current.rotation.copy(selectedMesh.rotation);
-        borderRef.current.scale.copy(selectedMesh.scale);
-        borderRef.current.visible = true;
-      } else if (borderRef.current) {
-        borderRef.current.visible = false;
-      }
+        // Update border scale if this is the selected mesh
+        if (borderRef.current && mesh === imageMeshes[selectedMeshIndexRef.current]) {
+          borderRef.current.position.copy(mesh.position)
+          borderRef.current.rotation.copy(mesh.rotation)
+          const borderScale = baseScale * scaleMultiplier
+          borderRef.current.scale.set(borderScale, borderScale, 1)
+          borderRef.current.visible = true
+        }
+      })
 
       // Update image materials
       if (sceneRef.current) {

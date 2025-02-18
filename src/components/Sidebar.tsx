@@ -2,34 +2,35 @@ import { Link } from '@tanstack/react-router'
 import { HomeIcon } from '@radix-ui/react-icons'
 import SectionLink from './SectionLink'
 
-// Import images from each section
-import modelingImg1 from "@assets/images/digitals/Leah Digitals0292 1.jpg";
-import modelingImg2 from "@assets/images/digitals/Leah Digitals0277 1.jpg";
-import modelingImg3 from "@assets/images/digitals/IMG_3450.jpg";
+type ImageModule = { default: string }
+
+// Dynamically import images from each directory
+const modelingImages = import.meta.glob<ImageModule>('@assets/images/digitals/*.{png,jpg,jpeg}', { eager: true })
+const headshotsImages = import.meta.glob<ImageModule>('@assets/images/headshots/*.{png,jpg,jpeg}', { eager: true })
+const editorialImages = import.meta.glob<ImageModule>('@assets/images/editorial/*.{png,jpg,jpeg}', { eager: true })
+
+// Helper function to get first 3 images from a module object
+const getFirst3Images = (moduleObj: Record<string, ImageModule>) => {
+  return Object.values(moduleObj)
+    .map(module => module.default)
+    .slice(0, 3)
+}
 
 const NAV_ITEMS = [
   {
     title: "Modeling Digitals",
     path: "/modeling",
-    images: [modelingImg1, modelingImg2, modelingImg3],
+    images: getFirst3Images(modelingImages),
   },
   {
     title: "Headshots",
     path: "/headshots",
-    images: [
-      "https://picsum.photos/seed/headshots1/800/1200",
-      "https://picsum.photos/seed/headshots2/800/1200",
-      "https://picsum.photos/seed/headshots3/800/1200",
-    ],
+    images: getFirst3Images(headshotsImages),
   },
   {
     title: "Editorial & Fine Art",
     path: "/editorial",
-    images: [
-      "https://picsum.photos/seed/editorial1/800/1200",
-      "https://picsum.photos/seed/editorial2/800/1200",
-      "https://picsum.photos/seed/editorial3/800/1200",
-    ],
+    images: getFirst3Images(editorialImages),
   },
 ];
 
@@ -40,7 +41,7 @@ interface SidebarProps {
 const Sidebar = ({ orientation = 'vertical' }: SidebarProps) => {
   return (
     <nav className={`
-      flex flex-col gap-2 p-4 lg:p-6
+      flex flex-col gap-2 py-2
       ${orientation === 'horizontal' ? 'lg:flex-row lg:items-center' : ''}
     `}>
       <Link

@@ -7,29 +7,9 @@ import BookingSection from '@components/BookingSection'
 import LocationSection from '@components/LocationSection'
 import CancellationSection from '@components/CancellationSection'
 
-// Import gallery images
-import leahDigitals1 from '@assets/images/digitals/Leah Digitals0292 1.jpg'
-import leahDigitals2 from '@assets/images/digitals/Leah Digitals0277 1.jpg'
-import leahDigitals3 from '@assets/images/digitals/Leah Digitals0216 1.jpg'
-import leahDigitals4 from '@assets/images/digitals/Leah Digitals0061 1.jpg'
-import img3450 from '@assets/images/digitals/IMG_3450.jpg'
-import img3415 from '@assets/images/digitals/IMG_3415.jpg'
-import img3405 from '@assets/images/digitals/IMG_3405-Edit.jpg'
-import img3378 from '@assets/images/digitals/IMG_3378-Edit.jpg'
-import img3356 from '@assets/images/digitals/IMG_3356.jpg'
-
-// Gallery images array
-const GALLERY_IMAGES = [
-  leahDigitals1,
-  leahDigitals2,
-  leahDigitals3,
-  leahDigitals4,
-  img3450,
-  img3415,
-  img3405,
-  img3378,
-  img3356,
-]
+// Dynamically import all images from the modeling directory
+const imageModules = import.meta.glob('@assets/images/digitals/*.{png,jpg,jpeg}', { eager: true })
+const GALLERY_IMAGES = Object.values(imageModules).map(module => (module as { default: string }).default)
 
 export const Route = createFileRoute('/_service/modeling/')({
   component: () => (
