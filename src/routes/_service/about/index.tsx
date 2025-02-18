@@ -1,23 +1,29 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useState } from 'react'
 import ImageGallery from '@components/ImageGallery'
 import PageSection from '@components/PageSection'
 import Head from '@components/Head'
+import PreviewImage from '@components/PreviewImage'
 
-// Placeholder gallery images
-const GALLERY_IMAGES = [
-  'https://picsum.photos/seed/about1/800/1200',
-  'https://picsum.photos/seed/about2/800/1200',
-  'https://picsum.photos/seed/about3/800/1200',
-]
+// Use the same images as editorial
+const imageModules = import.meta.glob('@assets/images/editorial/*.{png,jpg,jpeg}', { eager: true })
+const GALLERY_IMAGES = Object.values(imageModules).map(module => (module as { default: string }).default)
 
-export const Route = createFileRoute('/_service/about/')({
-  component: () => (
+const AboutPage = () => {
+  const [previewImage, setPreviewImage] = useState(GALLERY_IMAGES[0])
+
+  return (
     <>
       <Head
         title="About Our Photography Studio"
         description="4o4.space STUDIO is a professional photography studio in Bushwick, Brooklyn. Founded by Jenny Zhang, we specialize in modeling digitals, headshots, and editorial photography."
-        image={GALLERY_IMAGES[0]}
+        image={previewImage}
         path="/about"
+      />
+      <PreviewImage 
+        title="About"
+        backgroundImage={GALLERY_IMAGES[0]}
+        onPreviewGenerated={setPreviewImage}
       />
       <div className="lg:px-8 px-2 py-8">
         <h1 className="text-2xl font-medium mb-8">About</h1>
@@ -51,5 +57,9 @@ export const Route = createFileRoute('/_service/about/')({
         </PageSection>
       </div>
     </>
-  ),
+  )
+}
+
+export const Route = createFileRoute('/_service/about/')({
+  component: AboutPage,
 }) 
