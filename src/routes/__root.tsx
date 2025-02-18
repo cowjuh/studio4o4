@@ -26,7 +26,7 @@ const RootComponent = () => {
         </div>
       </div>
       <Footer />
-      <TanStackRouterDevtools />
+      {process.env.NODE_ENV === 'development' && <TanStackRouterDevtools/>}
     </div>
   )
 }
