@@ -10,8 +10,8 @@ const RootComponent = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <div className="flex-1 flex justify-center px-2">
-        <div className="max-w-7xl w-full flex gap-6">
+      <div className="flex-1 flex justify-center">
+        <div className="max-w-7xl w-full flex gap-6 px-2">
           <div className="hidden md:block w-[240px] flex-shrink-0 sticky top-16 h-[calc(100vh-4rem)]">
             <Sidebar orientation="vertical" />
           </div>

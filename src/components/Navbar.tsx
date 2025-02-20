@@ -11,7 +11,7 @@ const NAV_ITEMS = [
   },
   {
     path: '/headshots',
-    label: 'Headshots',
+    label: 'Headshots & Personal Branding',
   },
   {
     path: '/editorial',
@@ -28,7 +28,7 @@ const Navbar = () => {
 
   return (
     <nav className="sticky top-0 bg-white border-b border-black/70 z-50">
-      <div className="max-w-7xl mx-auto px-2 lg:px-0 h-16 flex items-center">
+      <div className="max-w-7xl mx-auto px-2 h-16 flex items-center">
         <div className="flex justify-between items-center w-full">
           <Link to="/" className="flex items-center space-x-4 hover:opacity-80 transition-opacity">
             <div className="flex items-center space-x-2">

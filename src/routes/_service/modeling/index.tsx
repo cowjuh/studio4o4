@@ -37,8 +37,8 @@ const ModelingPage = () => {
         <PageSection title="Packages">
           <div className="space-y-8">
             <PackageCard
-              title="1 look Package"
-              price={175}
+              title="1 Look Package"
+              price={200}
               duration="1hr"
               details={[
                 '1 outfit',
@@ -49,8 +49,8 @@ const ModelingPage = () => {
               ]}
             />
             <PackageCard
-              title="2 look Package"
-              price={275}
+              title="2 Looks Package"
+              price={325}
               duration="1.5hr"
               details={[
                 '2 outfits',

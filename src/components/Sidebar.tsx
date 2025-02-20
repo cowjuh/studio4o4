@@ -10,27 +10,27 @@ const headshotsImages = import.meta.glob<ImageModule>('@assets/images/headshots/
 const editorialImages = import.meta.glob<ImageModule>('@assets/images/editorial/*.{png,jpg,jpeg}', { eager: true })
 
 // Helper function to get first 3 images from a module object
-const getFirst3Images = (moduleObj: Record<string, ImageModule>) => {
+const getFirst4Images = (moduleObj: Record<string, ImageModule>) => {
   return Object.values(moduleObj)
     .map(module => module.default)
-    .slice(0, 3)
+    .slice(0, 4)
 }
 
 const NAV_ITEMS = [
   {
-    title: "Modeling Digitals",
+    title: "Modeling Digitals & Comp Cards",
     path: "/modeling",
-    images: getFirst3Images(modelingImages),
+    images: getFirst4Images(modelingImages),
   },
   {
-    title: "Headshots",
+    title: "Headshots & Personal Branding",
     path: "/headshots",
-    images: getFirst3Images(headshotsImages),
+    images: getFirst4Images(headshotsImages),
   },
   {
-    title: "Editorial & Fine Art",
+    title: "Editorial, Fine Art & Other",
     path: "/editorial",
-    images: getFirst3Images(editorialImages),
+    images: getFirst4Images(editorialImages),
   },
 ];
 
