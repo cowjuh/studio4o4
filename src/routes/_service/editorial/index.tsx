@@ -35,7 +35,7 @@ const EditorialPage = () => {
               For editorial and fine art projects, reach out directly to discuss your vision:
             </p>
             <p className="text-sm">
-              DM <span className="font-medium">@cowjuh</span> on Instagram or email <span className="font-medium">bookings@4o4.space</span>
+              DM <span className="font-medium">@cowjuh</span> on Instagram or email <span className="font-medium">cowjuh@gmail.com</span>
             </p>
           </div>
         </PageSection>
