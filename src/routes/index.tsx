@@ -1,23 +1,32 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Head from "@components/Head";
 import ThreeGallery from "@components/ThreeGallery";
+import Sidebar from "@/components/Sidebar";
 
-type ImageModule = { default: string }
+type ImageModule = { default: string };
 
-const modelingImages = import.meta.glob<ImageModule>('@assets/images/digitals/*.{png,jpg,jpeg}', { eager: true })
-const headshotsImages = import.meta.glob<ImageModule>('@assets/images/headshots/*.{png,jpg,jpeg}', { eager: true })
-const editorialImages = import.meta.glob<ImageModule>('@assets/images/editorial/*.{png,jpg,jpeg}', { eager: true })
+const modelingImages = import.meta.glob<ImageModule>(
+  "@assets/images/digitals/*.{png,jpg,jpeg}",
+  { eager: true }
+);
+const headshotsImages = import.meta.glob<ImageModule>(
+  "@assets/images/headshots/*.{png,jpg,jpeg}",
+  { eager: true }
+);
+const editorialImages = import.meta.glob<ImageModule>(
+  "@assets/images/editorial/*.{png,jpg,jpeg}",
+  { eager: true }
+);
 
 const getFirst4Images = (moduleObj: Record<string, ImageModule>) => {
   return Object.values(moduleObj)
-    .map(module => module.default)
-    .slice(0, 4)
-}
+    .map((module) => module.default)
+    .slice(0, 4);
+};
 
 const getAllImages = (moduleObj: Record<string, ImageModule>) => {
-  return Object.values(moduleObj)
-    .map(module => module.default)
-}
+  return Object.values(moduleObj).map((module) => module.default);
+};
 
 const ALL_IMAGES = [
   ...getFirst4Images(modelingImages),
@@ -49,6 +58,9 @@ export const Route = createFileRoute("/")({
             </div>
           </div>
         </div>
+      </div>
+      <div className='md:hidden block'>
+        <Sidebar />
       </div>
     </div>
   ),

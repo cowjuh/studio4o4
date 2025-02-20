@@ -1,6 +1,6 @@
-import { Link } from "@tanstack/react-router";
+import { Link, LinkProps } from "@tanstack/react-router";
 
-interface SectionLinkProps {
+interface SectionLinkProps extends LinkProps {
   index?: number;
   title: string;
   path: string;
