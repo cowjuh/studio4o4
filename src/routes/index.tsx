@@ -27,7 +27,7 @@ const ALL_IMAGES = [
 
 export const Route = createFileRoute("/")({
   component: () => (
-    <div className='flex flex-col h-full p-2 lg:p-0'>
+    <div className='flex flex-col h-full lg:p-0'>
       <Head
         title='4o4.space STUDIO - Photography Studio in Bushwick, Brooklyn'
         description='Professional photography studio in Bushwick specializing in modeling digitals, headshots, and editorial photography.'

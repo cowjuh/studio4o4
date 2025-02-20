@@ -8,21 +8,25 @@ const RootComponent = () => {
   const isHomePage = matches.length === 1 || matches[matches.length - 1].pathname === '/'
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Navbar />
-      <div className="flex-1 flex flex-col">
-        <div className="flex-1 flex justify-center">
-          <div className="max-w-7xl w-full mx-auto flex gap-2">
-              <div className="hidden md:block w-[240px] sticky top-16 h-[calc(100vh-4rem)]">
-                <Sidebar orientation="vertical" />
-              </div>
-            <main className={`flex-1 lg:p-2 ${isHomePage ? 'w-full' : ''}`}>
+      <div className="flex-1 flex justify-center px-2">
+        <div className="max-w-7xl w-full flex gap-6">
+          <div className="hidden md:block w-[240px] flex-shrink-0 sticky top-16 h-[calc(100vh-4rem)]">
+            <Sidebar orientation="vertical" />
+          </div>
+          <div className="min-w-0 flex-1 h-full">
+            <main className={`py-2 h-full ${isHomePage ? 'w-full' : ''}`}>
               <Outlet />
             </main>
+            {process.env.NODE_ENV === 'development' && (
+              <div className="flex justify-end">
+                <TanStackRouterDevtools />
+              </div>
+            )}
           </div>
         </div>
       </div>
-      {process.env.NODE_ENV === 'development' && <TanStackRouterDevtools/>}
     </div>
   )
 }
