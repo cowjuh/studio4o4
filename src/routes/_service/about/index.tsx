@@ -24,26 +24,18 @@ const TextContent = ({ children }: { children: React.ReactNode }) => (
 );
 
 const AboutPage = () => {
-
   return (
     <>
       <Head
         title='4o4 STUDIO'
-        description='4o4.space STUDIO is a professional photography studio in Bushwick, Brooklyn. Founded by Jenny Zhang, we specialize in modeling digitals, comp cards, headshots, personal branding, and editorial photography.'
+        description='4o4.space STUDIO is a professional photography studio in Bushwick, Brooklyn. Founded by Jenny Zhang, specializing in modeling digitals, comp cards, headshots, personal branding, and editorial photography.'
         path='/about'
       />
-      {/* <PreviewImage
-        title='About'
-        backgroundImage={GALLERY_IMAGES[0]}
-        onPreviewGenerated={setPreviewImage}
-      /> */}
       <div className='lg:px-8 px-2 py-8'>
-        {/* <ImageGallery images={GALLERY_IMAGES} /> */}
         <div className='max-w-xl'>
-        <div className="h-[40vh] border border-black border-dashed rounded-lg overflow-hidden">
-          {/* <WaveGallery images={GALLERY_IMAGES} /> */}
-          <BirdsEyeWave images={GALLERY_IMAGES} />
-        </div>
+          <div className="h-[40vh] border border-black border-dashed rounded-lg overflow-hidden">
+            <BirdsEyeWave images={GALLERY_IMAGES} />
+          </div>
           <PageSection>
             <TextContent>
               4o4 STUDIO is Jenny Zhang's photography studio, installation
@@ -56,7 +48,7 @@ const AboutPage = () => {
             <div>
               <SectionHeader>Photography</SectionHeader>
               <TextContent>
-                We provide studio photography services, studio rental time, and
+                I provide studio photography services, studio rental time, and
                 photo editing services.
               </TextContent>
             </div>
@@ -64,10 +56,8 @@ const AboutPage = () => {
             <div>
               <SectionHeader>Everything Else</SectionHeader>
               <TextContent>
-                Jenny Zhang is a multidisciplinary artist and engineer who can
-                provide in house services in design, engineering, video,
-                illustration, and more. Reach out @cowjuh on IG or
-                cowjuh@gmail.com.
+                I'm also a software engineer, video editor, illustrator, product designer, graphic designer, and more. I learn fast.
+                To work on something together, reach out @cowjuh on IG or cowjuh@gmail.com.
               </TextContent>
             </div>
           </PageSection>

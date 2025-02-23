@@ -40,6 +40,7 @@ const ModelingPage = () => {
               title="1 Look Package"
               price={200}
               duration="1hr"
+              description='For modeling, acting, and photos with specific requirements.'
               details={[
                 '1 outfit',
                 'Portraits, Half body, Full body, Stylistic poses',
@@ -52,6 +53,7 @@ const ModelingPage = () => {
               title="2 Looks Package"
               price={325}
               duration="1.5hr"
+              description='For modeling, acting, and photos with specific requirements.'
               details={[
                 '2 outfits',
                 'Portraits, Half body, Full body, Stylistic poses',

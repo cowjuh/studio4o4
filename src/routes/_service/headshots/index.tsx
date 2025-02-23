@@ -39,6 +39,7 @@ const HeadshotsPage = () => {
               title="Basic Headshots Package"
               price={125}
               duration="30min"
+              description='For LinkedIn, corporate profiles, and personal branding.'
               details={[
                 '1 outfit',
                 'One location setting (choose from): Studio lighting setup OR Natural indoor lighting OR Simple outdoor location',
@@ -52,13 +53,14 @@ const HeadshotsPage = () => {
               title="Personal Branding Package"
               price={200}
               duration="1hr"
+              description='For LinkedIn, corporate profiles, and personal branding.'
               details={[
                 '1-2 outfits/looks',
                 'Indoor/outdoor locations',
                 '20 selects',
                 '4 retouched photos',
                 'Unlimited, untouched iPhone images',
-                '5 day delivery',
+                'Photos delivered within 5 days',
               ]}
             />
           </div>
@@ -70,7 +72,7 @@ const HeadshotsPage = () => {
             <p className="text-sm text-neutral-600">
               Booking appointment must be at 11am at the latest
               <br />
-              Photos delivered and retouched same day
+              Photos delivered and retouched by next day
             </p>
           </div>
         </PageSection>

@@ -1,5 +1,3 @@
-import { Link, useMatches } from '@tanstack/react-router'
-import { HomeIcon } from '@radix-ui/react-icons'
 import SectionLink from './SectionLink'
 
 type ImageModule = { default: string }
@@ -39,27 +37,12 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ orientation = 'vertical' }: SidebarProps) => {
-  const matches = useMatches()
-  const isHomePage = matches.length === 1 || matches[matches.length - 1].pathname === '/'
 
   return (
     <nav className={`
       flex flex-col gap-2 py-2
       ${orientation === 'horizontal' ? 'lg:flex-row lg:items-center' : ''}
     `}>
-      {!isHomePage && (
-        <Link
-          to="/"
-          className="flex items-center gap-2 text-sm group mb-4"
-      >
-        {({ isActive }) => (
-          <span className={`flex items-center gap-2 hover:underline ${isActive ? 'font-bold' : ''}`}>
-            <HomeIcon className="w-4 h-4" />
-            <span>Home</span>
-          </span>
-          )}
-        </Link>
-      )}
       <div className='divide-y divide-black/70'>
         {NAV_ITEMS.map((item, index) => (
           <SectionLink
