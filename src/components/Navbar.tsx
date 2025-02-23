@@ -71,8 +71,8 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden border-t border-black/70">
-          <div className="bg-white px-4 py-4 space-y-4">
+        <div className="md:hidden border-t border-black/70 absolute top-16 left-0 right-0">
+          <div className="bg-white px-4 py-4 space-y-4 border-b border-black/70">
             {/* Navigation Links */}
             <div className="space-y-3 border-b border-black/10 pb-4">
               {NAV_ITEMS.map((item) => (
