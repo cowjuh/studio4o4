@@ -24,55 +24,17 @@ const AcuityBookingButton = ({ className = '' }: AcuityBookingButtonProps) => {
         border-radius: 0 !important;
         border: 1px solid black !important;
         padding: 0.5rem 1rem !important;
-        position: relative !important;
-        overflow: hidden !important;
-        transition: color 0.2s ease !important;
-        isolation: isolate !important;
       }
-
-      .acuity-embed-button::before {
-        content: '' !important;
-        position: absolute !important;
-        inset: -50% !important;
-        background: conic-gradient(
-          from 0deg,
-          transparent 0deg,
-          black 0deg 60deg,
-          transparent 60deg 120deg,
-          black 120deg 180deg,
-          transparent 180deg 240deg,
-          black 240deg 300deg,
-          transparent 300deg
-        ) !important;
-        animation: none !important;
-        transition: transform 0.4s ease !important;
-        transform: scale(0) rotate(0deg) !important;
-        z-index: -1 !important;
-      }
-
       .acuity-embed-button:hover {
+        filter: none !important;
+        background: black !important;
         color: white !important;
       }
-
-      .acuity-embed-button:hover::before {
-        transform: scale(1) rotate(60deg) !important;
-      }
-
-      @keyframes rotate {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
       .acuity-embed-button:active,
       .acuity-embed-button:focus,
       .acuity-embed-button:visited {
         color: currentColor !important;
       }
-
       .acuity-embed-button:hover:active,
       .acuity-embed-button:hover:focus,
       .acuity-embed-button:hover:visited {
