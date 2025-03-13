@@ -2,26 +2,8 @@ import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { HamburgerMenuIcon, Cross1Icon } from '@radix-ui/react-icons'
 import AcuityBookingButton from './AcuityBookingButton'
+import { NAV_ITEMS } from '@/config/navigation'
 import logo from '../assets/images/auxiliary/IMG_8449.png'
-
-const NAV_ITEMS = [
-  {
-    path: '/modeling',
-    label: 'Modeling Digitals',
-  },
-  {
-    path: '/headshots',
-    label: 'Headshots & Personal Branding',
-  },
-  {
-    path: '/editorial',
-    label: 'Editorial & Fine Art',
-  },
-  {
-    path: '/about',
-    label: 'About',
-  },
-]
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)

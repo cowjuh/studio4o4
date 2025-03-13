@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as ServiceServiceImport } from './routes/_service/_service'
+import { Route as ServiceSpaceIndexImport } from './routes/_service/space/index'
 import { Route as ServiceModelingIndexImport } from './routes/_service/modeling/index'
 import { Route as ServiceHeadshotsIndexImport } from './routes/_service/headshots/index'
 import { Route as ServiceEditorialIndexImport } from './routes/_service/editorial/index'
@@ -28,6 +29,12 @@ const IndexRoute = IndexImport.update({
 
 const ServiceServiceRoute = ServiceServiceImport.update({
   id: '/_service/_service',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ServiceSpaceIndexRoute = ServiceSpaceIndexImport.update({
+  id: '/_service/space/',
+  path: '/space/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -101,6 +108,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServiceModelingIndexImport
       parentRoute: typeof rootRoute
     }
+    '/_service/space/': {
+      id: '/_service/space/'
+      path: '/space'
+      fullPath: '/space'
+      preLoaderRoute: typeof ServiceSpaceIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -113,6 +127,7 @@ export interface FileRoutesByFullPath {
   '/editorial': typeof ServiceEditorialIndexRoute
   '/headshots': typeof ServiceHeadshotsIndexRoute
   '/modeling': typeof ServiceModelingIndexRoute
+  '/space': typeof ServiceSpaceIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -122,6 +137,7 @@ export interface FileRoutesByTo {
   '/editorial': typeof ServiceEditorialIndexRoute
   '/headshots': typeof ServiceHeadshotsIndexRoute
   '/modeling': typeof ServiceModelingIndexRoute
+  '/space': typeof ServiceSpaceIndexRoute
 }
 
 export interface FileRoutesById {
@@ -132,13 +148,21 @@ export interface FileRoutesById {
   '/_service/editorial/': typeof ServiceEditorialIndexRoute
   '/_service/headshots/': typeof ServiceHeadshotsIndexRoute
   '/_service/modeling/': typeof ServiceModelingIndexRoute
+  '/_service/space/': typeof ServiceSpaceIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '' | '/about' | '/editorial' | '/headshots' | '/modeling'
+  fullPaths:
+    | '/'
+    | ''
+    | '/about'
+    | '/editorial'
+    | '/headshots'
+    | '/modeling'
+    | '/space'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/about' | '/editorial' | '/headshots' | '/modeling'
+  to: '/' | '' | '/about' | '/editorial' | '/headshots' | '/modeling' | '/space'
   id:
     | '__root__'
     | '/'
@@ -147,6 +171,7 @@ export interface FileRouteTypes {
     | '/_service/editorial/'
     | '/_service/headshots/'
     | '/_service/modeling/'
+    | '/_service/space/'
   fileRoutesById: FileRoutesById
 }
 
@@ -157,6 +182,7 @@ export interface RootRouteChildren {
   ServiceEditorialIndexRoute: typeof ServiceEditorialIndexRoute
   ServiceHeadshotsIndexRoute: typeof ServiceHeadshotsIndexRoute
   ServiceModelingIndexRoute: typeof ServiceModelingIndexRoute
+  ServiceSpaceIndexRoute: typeof ServiceSpaceIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -166,6 +192,7 @@ const rootRouteChildren: RootRouteChildren = {
   ServiceEditorialIndexRoute: ServiceEditorialIndexRoute,
   ServiceHeadshotsIndexRoute: ServiceHeadshotsIndexRoute,
   ServiceModelingIndexRoute: ServiceModelingIndexRoute,
+  ServiceSpaceIndexRoute: ServiceSpaceIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -183,7 +210,8 @@ export const routeTree = rootRoute
         "/_service/about/",
         "/_service/editorial/",
         "/_service/headshots/",
-        "/_service/modeling/"
+        "/_service/modeling/",
+        "/_service/space/"
       ]
     },
     "/": {
@@ -203,6 +231,9 @@ export const routeTree = rootRoute
     },
     "/_service/modeling/": {
       "filePath": "_service/modeling/index.tsx"
+    },
+    "/_service/space/": {
+      "filePath": "_service/space/index.tsx"
     }
   }
 }
