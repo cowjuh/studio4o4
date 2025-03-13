@@ -10,7 +10,7 @@ const ImageGallery = ({ images }: ImageGalleryProps) => {
           key={index}
           src={src}
           alt={`Gallery image ${index + 1}`}
-          className="h-[60vh] w-auto object-cover first:ml-4 md:first:ml-0 last:mr-4 md:last:mr-0"
+          className="h-[60vh] border border-gray-200 w-auto object-cover first:ml-4 md:first:ml-0 last:mr-4 md:last:mr-0"
         />
       ))}
     </div>
