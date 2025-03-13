@@ -33,10 +33,10 @@ export const NAV_ITEMS = [
     images: getFirst4Images(editorialImages),
   },
   {
-    title: "THE SPACE",
-    label: "THE SPACE",
+    title: "The Space",
+    label: "The Space",
     path: "/space",
-    images: getFirst4Images(spaceImages), // Temporarily using editorial images
+    images: getFirst4Images(spaceImages),
   },
   {
     title: "About",
