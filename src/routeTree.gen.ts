@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as ServiceServiceImport } from './routes/_service/_service'
+import { Route as ServiceTalentIndexImport } from './routes/_service/talent/index'
 import { Route as ServiceSpaceIndexImport } from './routes/_service/space/index'
 import { Route as ServiceModelingIndexImport } from './routes/_service/modeling/index'
 import { Route as ServiceHeadshotsIndexImport } from './routes/_service/headshots/index'
@@ -29,6 +30,12 @@ const IndexRoute = IndexImport.update({
 
 const ServiceServiceRoute = ServiceServiceImport.update({
   id: '/_service/_service',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ServiceTalentIndexRoute = ServiceTalentIndexImport.update({
+  id: '/_service/talent/',
+  path: '/talent/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -115,6 +122,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServiceSpaceIndexImport
       parentRoute: typeof rootRoute
     }
+    '/_service/talent/': {
+      id: '/_service/talent/'
+      path: '/talent'
+      fullPath: '/talent'
+      preLoaderRoute: typeof ServiceTalentIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -128,6 +142,7 @@ export interface FileRoutesByFullPath {
   '/headshots': typeof ServiceHeadshotsIndexRoute
   '/modeling': typeof ServiceModelingIndexRoute
   '/space': typeof ServiceSpaceIndexRoute
+  '/talent': typeof ServiceTalentIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -138,6 +153,7 @@ export interface FileRoutesByTo {
   '/headshots': typeof ServiceHeadshotsIndexRoute
   '/modeling': typeof ServiceModelingIndexRoute
   '/space': typeof ServiceSpaceIndexRoute
+  '/talent': typeof ServiceTalentIndexRoute
 }
 
 export interface FileRoutesById {
@@ -149,6 +165,7 @@ export interface FileRoutesById {
   '/_service/headshots/': typeof ServiceHeadshotsIndexRoute
   '/_service/modeling/': typeof ServiceModelingIndexRoute
   '/_service/space/': typeof ServiceSpaceIndexRoute
+  '/_service/talent/': typeof ServiceTalentIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -161,8 +178,17 @@ export interface FileRouteTypes {
     | '/headshots'
     | '/modeling'
     | '/space'
+    | '/talent'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/about' | '/editorial' | '/headshots' | '/modeling' | '/space'
+  to:
+    | '/'
+    | ''
+    | '/about'
+    | '/editorial'
+    | '/headshots'
+    | '/modeling'
+    | '/space'
+    | '/talent'
   id:
     | '__root__'
     | '/'
@@ -172,6 +198,7 @@ export interface FileRouteTypes {
     | '/_service/headshots/'
     | '/_service/modeling/'
     | '/_service/space/'
+    | '/_service/talent/'
   fileRoutesById: FileRoutesById
 }
 
@@ -183,6 +210,7 @@ export interface RootRouteChildren {
   ServiceHeadshotsIndexRoute: typeof ServiceHeadshotsIndexRoute
   ServiceModelingIndexRoute: typeof ServiceModelingIndexRoute
   ServiceSpaceIndexRoute: typeof ServiceSpaceIndexRoute
+  ServiceTalentIndexRoute: typeof ServiceTalentIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -193,6 +221,7 @@ const rootRouteChildren: RootRouteChildren = {
   ServiceHeadshotsIndexRoute: ServiceHeadshotsIndexRoute,
   ServiceModelingIndexRoute: ServiceModelingIndexRoute,
   ServiceSpaceIndexRoute: ServiceSpaceIndexRoute,
+  ServiceTalentIndexRoute: ServiceTalentIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -211,7 +240,8 @@ export const routeTree = rootRoute
         "/_service/editorial/",
         "/_service/headshots/",
         "/_service/modeling/",
-        "/_service/space/"
+        "/_service/space/",
+        "/_service/talent/"
       ]
     },
     "/": {
@@ -234,6 +264,9 @@ export const routeTree = rootRoute
     },
     "/_service/space/": {
       "filePath": "_service/space/index.tsx"
+    },
+    "/_service/talent/": {
+      "filePath": "_service/talent/index.tsx"
     }
   }
 }
