@@ -57,7 +57,7 @@ const AboutPage = () => {
               <SectionHeader>Everything Else</SectionHeader>
               <TextContent>
                 I'm also a software engineer, video editor, illustrator, product designer, graphic designer, and more. I learn fast.
-                To work on something together, reach out @cowjuh on IG or cowjuh@gmail.com.
+                To work on something together outside of photography, reach out cowjuh (at) gmail (dot) com.
               </TextContent>
             </div>
           </PageSection>
@@ -66,7 +66,7 @@ const AboutPage = () => {
         <PageSection title='Contact'>
           <div className='max-w-xl'>
             <TextContent>
-              For inquiries: DM @cowjuh on IG or email cowjuh@gmail.com
+              For inquiries: DM @4o4.space on IG or email hello@4o4.space
             </TextContent>
             <TextContent>
               Location: Bushwick, Brooklyn (3 min walk from Morgan Ave L stop)

@@ -83,8 +83,8 @@ const SpacePage = () => {
               For studio inquiries and bookings, please reach out:
             </p>
             <p className='text-sm'>
-              DM <span className='font-medium'>@cowjuh</span> on Instagram or
-              email <span className='font-medium'>cowjuh@gmail.com</span>
+              DM <span className='font-medium'>@4o4.space</span> on Instagram or
+              email <span className='font-medium'>hello@4o4.space</span>
             </p>
           </div>
         </PageSection>

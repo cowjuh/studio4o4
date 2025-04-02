@@ -29,8 +29,8 @@ const TalentPage = () => {
   return (
     <>
       <Head
-        title="Talent Management"
-        description="Representing emerging creative talent in Brooklyn. We work with models, artists, and creatives to develop their portfolios and connect them with opportunities."
+        title="Talent & Friends"
+        description="A collection of friends and talent that I love and support."
         image={previewImage}
         path="/talent"
       />
@@ -63,10 +63,10 @@ const TalentPage = () => {
         <PageSection title="Work With Us">
           <div className="space-y-4">
             <p className="text-sm">
-              For talent inquiries or to be considered for representation:
+              If you've worked with me and would like to be added to this page, please reach out to me.
             </p>
             <p className="text-sm">
-              DM <span className="font-medium">@cowjuh</span> on Instagram or email <span className="font-medium">cowjuh@gmail.com</span>
+              DM <span className="font-medium">@4o4.space</span> on Instagram or email <span className="font-medium">hello@4o4.space</span>
             </p>
           </div>
         </PageSection>

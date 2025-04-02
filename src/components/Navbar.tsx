@@ -36,7 +36,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-4">
             <div className="text-sm">
               <div>Inquiries</div>
-              <div className="text-neutral-500">@cowjuh | cowjuh@gmail.com</div>
+              <div className="text-neutral-500">@4o4.space | hello@4o4.space</div>
             </div>
             <AcuityBookingButton />
           </div>
@@ -80,8 +80,8 @@ const Navbar = () => {
             </div>
             <div className="text-sm">
               <div>Inquiries</div>
-              <div>@cowjuh</div>
-              <div>cowjuh@gmail.com</div>
+              <div>@4o4.space</div>
+              <div>hello@4o4.space</div>
             </div>
             <AcuityBookingButton className="block text-center" />
           </div>
