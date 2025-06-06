@@ -5,57 +5,40 @@ import PreviewImage from '@components/PreviewImage'
 import { PhotoProvider, PhotoView } from 'react-photo-view'
 import 'react-photo-view/dist/react-photo-view.css'
 
+type ImageModule = { default: string }
+
+// Import all Jamie's images using Vite's dynamic import
+const imageModules = {
+  headshot: import.meta.glob<ImageModule>('@assets/images/talent/jamie/main.jpg', { eager: true }),
+  digitals: import.meta.glob<ImageModule>('@assets/images/talent/jamie/digitals/*.{png,jpg,jpeg}', { eager: true }),
+  editorial: import.meta.glob<ImageModule>('@assets/images/talent/jamie/editorial/*.{png,jpg,jpeg}', { eager: true })
+}
+
 // Jamie's image data
 const JAMIE_IMAGES = {
-  headshot: '/src/assets/images/talent/jamie/main.jpg',
+  headshot: Object.values(imageModules.headshot)[0].default,
   digitals: [
     {
-      image: '/src/assets/images/talent/jamie/digitals/front.jpg',
+      image: Object.values(imageModules.digitals)[0].default,
       label: 'Front'
     },
     {
-      image: '/src/assets/images/talent/jamie/digitals/side.jpg',
+      image: Object.values(imageModules.digitals)[1].default,
       label: 'Side'
     },
     {
-      image: '/src/assets/images/talent/jamie/digitals/upper-body.jpg',
+      image: Object.values(imageModules.digitals)[2].default,
       label: 'Upper Body'
     },
     {
-      image: '/src/assets/images/talent/jamie/digitals/full-body.jpg',
+      image: Object.values(imageModules.digitals)[3].default,
       label: 'Full Body'
     }
   ],
-  editorial: [
-    {
-      image: '/src/assets/images/talent/jamie/editorial/IMG_4623.jpg',
-      label: 'Editorial 1'
-    },
-    {
-      image: '/src/assets/images/talent/jamie/editorial/IMG_4578.jpg',
-      label: 'Editorial 2'
-    },
-    {
-      image: '/src/assets/images/talent/jamie/editorial/IMG_4207.jpg',
-      label: 'Editorial 3'
-    },
-    {
-      image: '/src/assets/images/talent/jamie/editorial/IMG_4186.jpg',
-      label: 'Editorial 4'
-    },
-    {
-      image: '/src/assets/images/talent/jamie/editorial/EDH_NYCXDESIGN_PHOTOSHOOT-081.jpg',
-      label: 'Editorial 5'
-    },
-    {
-      image: '/src/assets/images/talent/jamie/editorial/EDH_NYCXDESIGN_PHOTOSHOOT-069.jpg',
-      label: 'Editorial 6'
-    },
-    {
-      image: '/src/assets/images/talent/jamie/editorial/20250518_nausicaa_02_look_1378.jpg',
-      label: 'Editorial 7'
-    }
-  ]
+  editorial: Object.values(imageModules.editorial).map((module: ImageModule, index) => ({
+    image: module.default,
+    label: `Editorial ${index + 1}`
+  }))
 }
 
 const MeasurementItem = ({ label, value }: { label: string; value: string }) => (
