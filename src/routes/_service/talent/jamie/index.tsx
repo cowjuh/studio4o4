@@ -2,6 +2,8 @@ import { createFileRoute } from '@tanstack/react-router'
 import PageSection from '@components/PageSection'
 import Head from '@components/Head'
 import PreviewImage from '@components/PreviewImage'
+import { PhotoProvider, PhotoView } from 'react-photo-view'
+import 'react-photo-view/dist/react-photo-view.css'
 
 // Jamie's image data
 const JAMIE_IMAGES = {
@@ -84,53 +86,61 @@ const JamiePage = () => {
             <p className="text-sm text-gray-600 mt-1">Artist / Model</p>
           </div>
 
-          {/* Headshot Section */}
-          <PageSection title="Headshot">
-            <div className="aspect-[3/4] w-full max-w-md">
-              <img 
-                src={JAMIE_IMAGES.headshot} 
-                alt="Jamie Waltzer"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </PageSection>
+          <PhotoProvider>
+            {/* Headshot Section */}
+            <PageSection title="Headshot">
+              <div className="aspect-[3/4] w-full max-w-md cursor-pointer transition-opacity hover:opacity-95">
+                <PhotoView src={JAMIE_IMAGES.headshot}>
+                  <img 
+                    src={JAMIE_IMAGES.headshot} 
+                    alt="Jamie Waltzer"
+                    className="w-full h-full object-cover"
+                  />
+                </PhotoView>
+              </div>
+            </PageSection>
 
-          {/* Digitals Section */}
-          <PageSection title="Digitals">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
-              {JAMIE_IMAGES.digitals.map((digital, index) => (
-                <div key={index}>
-                  <div className="aspect-[3/4] w-full">
-                    <img 
-                      src={digital.image} 
-                      alt={`Jamie Waltzer - ${digital.label}`}
-                      className="w-full h-full object-cover"
-                    />
+            {/* Digitals Section */}
+            <PageSection title="Digitals">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+                {JAMIE_IMAGES.digitals.map((digital, index) => (
+                  <div key={index}>
+                    <div className="aspect-[3/4] w-full cursor-pointer transition-opacity hover:opacity-95">
+                      <PhotoView src={digital.image}>
+                        <img 
+                          src={digital.image} 
+                          alt={`Jamie Waltzer - ${digital.label}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </PhotoView>
+                    </div>
+                    <div className="mt-4">
+                      <p className="text-sm text-gray-600">{digital.label}</p>
+                    </div>
                   </div>
-                  <div className="mt-4">
-                    <p className="text-sm text-gray-600">{digital.label}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </PageSection>
+                ))}
+              </div>
+            </PageSection>
 
-          {/* Editorial Section */}
-          <PageSection title="Editorial">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-              {JAMIE_IMAGES.editorial.map((image, index) => (
-                <div key={index}>
-                  <div className="aspect-[3/4] w-full">
-                    <img 
-                      src={image.image} 
-                      alt="Jamie Waltzer"
-                      className="w-full h-full object-cover"
-                    />
+            {/* Editorial Section */}
+            <PageSection title="Editorial">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+                {JAMIE_IMAGES.editorial.map((image, index) => (
+                  <div key={index}>
+                    <div className="aspect-[3/4] w-full cursor-pointer transition-opacity hover:opacity-95">
+                      <PhotoView src={image.image}>
+                        <img 
+                          src={image.image} 
+                          alt="Jamie Waltzer"
+                          className="w-full h-full object-cover"
+                        />
+                      </PhotoView>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </PageSection>
+                ))}
+              </div>
+            </PageSection>
+          </PhotoProvider>
 
           <PageSection title="About">
             <p className="text-sm">
