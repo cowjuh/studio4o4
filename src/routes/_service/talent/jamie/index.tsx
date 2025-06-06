@@ -69,20 +69,20 @@ const JamiePage = () => {
   return (
     <>
       <Head
-        title="Jamie Waltzer"
-        description="Jamie Waltzer is a model and artist based in New York"
+        title="Jamie"
+        description="Jamie is a model and artist based in New York"
         image={JAMIE_IMAGES.headshot}
         path="/talent/jamie"
       />
       <PreviewImage 
-        title="Jamie Waltzer"
+        title="Jamie"
         backgroundImage={JAMIE_IMAGES.headshot}
         onPreviewGenerated={() => {}}
       />
       <div className="lg:px-8 px-2 py-8">
         <div className="max-w-4xl">
           <div className="mb-8">
-            <h1 className="text-2xl font-medium">Jamie Waltzer</h1>
+            <h1 className="text-2xl font-medium">Jamie</h1>
             <p className="text-sm text-gray-600 mt-1">Artist / Model</p>
           </div>
 
@@ -93,7 +93,7 @@ const JamiePage = () => {
                 <PhotoView src={JAMIE_IMAGES.headshot}>
                   <img 
                     src={JAMIE_IMAGES.headshot} 
-                    alt="Jamie Waltzer"
+                    alt="Jamie"
                     className="w-full h-full object-cover"
                   />
                 </PhotoView>
@@ -109,7 +109,7 @@ const JamiePage = () => {
                       <PhotoView src={digital.image}>
                         <img 
                           src={digital.image} 
-                          alt={`Jamie Waltzer - ${digital.label}`}
+                          alt={`Jamie - ${digital.label}`}
                           className="w-full h-full object-cover"
                         />
                       </PhotoView>
@@ -131,7 +131,7 @@ const JamiePage = () => {
                       <PhotoView src={image.image}>
                         <img 
                           src={image.image} 
-                          alt="Jamie Waltzer"
+                          alt="Jamie"
                           className="w-full h-full object-cover"
                         />
                       </PhotoView>
@@ -144,7 +144,7 @@ const JamiePage = () => {
 
           <PageSection title="About">
             <p className="text-sm">
-              Jamie Waltzer is a model and artist based in New York.
+            Jamie is a model and artist based in New York. Drawing from her Kyrgyz roots and passion for fashion, writing, and film, she creates work that explores identity and storytelling across different mediums.
             </p>
           </PageSection>
 
